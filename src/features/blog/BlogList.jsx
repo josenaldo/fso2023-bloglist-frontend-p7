@@ -6,7 +6,6 @@ import { blogService, BlogForm, Blog } from '@/features/blog'
 import { Togglable } from '@/features/ui'
 
 import { setErrorAlert, setAlert, ALERT_TYPES } from '@/features/alert'
-// import { appConfig } from '@/data'
 
 const BlogList = ({ user }) => {
   const dispatch = useDispatch()
@@ -128,7 +127,6 @@ const BlogList = ({ user }) => {
 }
 
 BlogList.propTypes = {
-  setMessage: PropTypes.func.isRequired,
   user: PropTypes.shape({
     token: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
