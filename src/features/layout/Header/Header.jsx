@@ -1,17 +1,24 @@
 import { Link } from 'react-router-dom'
 
 import { appConfig } from '@/data'
-import styles from './Header.module.css'
+import { Container, Link as MuiLink, Paper } from '@mui/material'
 
 const Header = () => {
   return (
-    <header className={styles.header}>
-      <div className="container">
-        <Link to="/" className={styles.link}>
+    <Paper component="header" elevation={1}>
+      <Container>
+        <MuiLink
+          component={Link}
+          to="/"
+          sx={{
+            color: 'inherit',
+            textDecoration: 'none',
+          }}
+        >
           <h1>{appConfig.application.name}</h1>
-        </Link>
-      </div>
-    </header>
+        </MuiLink>
+      </Container>
+    </Paper>
   )
 }
 

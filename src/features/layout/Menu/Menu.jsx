@@ -1,21 +1,28 @@
 import { Link } from 'react-router-dom'
 
+import { Box, Container, Link as MuiLink, Paper } from '@mui/material'
+
 import { menuConfig } from '@/data'
-import styles from './Menu.module.css'
 
 const Menu = () => {
   return (
-    <nav className={styles.menuWrapper}>
-      <div className="container">
-        <div className={styles.menu}>
+    <Paper component="nav" elevation={3} sx={{ py: 2 }}>
+      <Container>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            gap: '1rem',
+          }}
+        >
           {menuConfig.map((item) => (
-            <Link key={item.path} to={item.path}>
+            <MuiLink component={Link} key={item.path} to={item.path}>
               {item.title}
-            </Link>
+            </MuiLink>
           ))}
-        </div>
-      </div>
-    </nav>
+        </Box>
+      </Container>
+    </Paper>
   )
 }
 

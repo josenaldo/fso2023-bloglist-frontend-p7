@@ -1,19 +1,42 @@
 import { appConfig } from '@/data'
-import styles from './Footer.module.css'
+import { Box, Container, Link, Paper } from '@mui/material'
 
 const Footer = () => {
   return (
-    <footer className={styles.footer}>
-      <span>
-        Created by
-        <a href="https://josenaldo.github.io">{appConfig.footer.createdBy}</a>.
-      </span>
-      <span>
-        See{' '}
-        <a href={appConfig.footer.repository}>{appConfig.footer.repository}</a>{' '}
-        for the source code.
-      </span>
-    </footer>
+    <Paper
+      component="footer"
+      elevation={1}
+      sx={{
+        py: 5,
+        mt: 2,
+      }}
+    >
+      <Container
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '0.5rem',
+          fontSize: '0.8rem',
+        }}
+      >
+        <Box>
+          See{' '}
+          <Link href={appConfig.footer.repository}>
+            {appConfig.footer.repository}
+          </Link>{' '}
+          for the source code.
+        </Box>
+        <Box>
+          Created by
+          <Link href="https://josenaldo.github.io">
+            {appConfig.footer.createdBy}
+          </Link>
+          .
+        </Box>
+      </Container>
+    </Paper>
   )
 }
 

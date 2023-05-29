@@ -1,7 +1,7 @@
 import { Header, Menu, Footer } from '@/features/layout'
-// import { Notification } from '@/features/notification'
 import { Alert } from '@/features/alert'
 import styles from './Template.module.css'
+import { Container } from '@mui/material'
 
 const Template = ({ children }) => {
   return (
@@ -11,9 +11,9 @@ const Template = ({ children }) => {
       <Alert />
       {/* <Notification /> */}
 
-      <div className={`container ${styles.mainContainer}`}>
+      <Container>
         <main>{children}</main>
-      </div>
+      </Container>
 
       <Footer />
     </div>
