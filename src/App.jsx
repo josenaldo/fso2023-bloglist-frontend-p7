@@ -1,14 +1,12 @@
 import React from 'react'
 
-import loginService from 'services/login'
-import blogService from 'services/blogs'
+import loginService from '@/services/login'
+import blogService from '@/services/blogs'
 
-import BlogList from 'components/BlogList'
-import LoginForm from 'components/LoginForm'
-import UserAppbar from 'components/UserAppbar'
-import Alert from 'components/Alert'
-import { ALERT_TYPE } from 'components/Alert'
-import { LOGGED_USER_KEY } from 'config'
+import BlogList from '@/components/BlogList'
+import LoginForm from '@/components/LoginForm'
+import UserAppbar from '@/components/UserAppbar'
+import { LOGGED_USER_KEY } from '@/config'
 
 import './App.css'
 

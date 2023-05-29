@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import blogService from 'services/blogs'
+import blogService from '@/services/blogs'
 
-import { ALERT_TYPE } from 'components/Alert'
-import ErrorUtils from 'utils/ErrorUtils'
+import { ALERT_TYPE } from '@/components/Alert'
+import ErrorUtils from '@/utils/ErrorUtils'
 
-import Blog from 'components/Blog'
-import BlogForm from 'components/BlogForm'
+import Blog from '@/components/Blog'
+import BlogForm from '@/components/BlogForm'
 import Togglable from './Togglable'
 
 const BlogList = ({ setMessage, user }) => {
