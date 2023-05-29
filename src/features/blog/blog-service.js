@@ -4,7 +4,9 @@ import axios from 'axios'
  * The base URL for the API.
  * @constant {string}
  */
-const baseUrl = '/api/blogs'
+import { appConfig } from '@/data'
+
+const baseUrl = `${appConfig.application.BACKEND}/api/blogs`
 
 /**
  * The token to authenticate requests.
