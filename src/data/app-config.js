@@ -4,6 +4,7 @@ const appConfig = {
     version: '0.0.1',
     description:
       'This project is a bloglist app, for the Fullstack Open course, part 7. The project is licensed under the MIT License and was created by Josenaldo de Oliveira Matos Filho.',
+    LOGGED_USER_KEY: 'loggedBlogListAppUser',
   },
   footer: {
     createdBy: 'Josenaldo Matos',

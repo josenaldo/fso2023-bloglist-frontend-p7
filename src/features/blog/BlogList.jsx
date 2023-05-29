@@ -1,16 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useDispatch } from 'react-redux'
 
-import blogService from '@/services/blogs'
+import { blogService, BlogForm, Blog } from '@/features/blog'
+import { Togglable } from '@/features/ui'
 
-import { ALERT_TYPE } from '@/components/Alert'
-import ErrorUtils from '@/utils/ErrorUtils'
+import { setErrorAlert, setAlert, ALERT_TYPES } from '@/features/alert'
+// import { appConfig } from '@/data'
 
-import Blog from '@/components/Blog'
-import BlogForm from '@/components/BlogForm'
-import Togglable from './Togglable'
-
-const BlogList = ({ setMessage, user }) => {
+const BlogList = ({ user }) => {
+  const dispatch = useDispatch()
   const [blogs, setBlogs] = React.useState([])
   const blogFormRef = React.useRef()
 
@@ -35,17 +34,21 @@ const BlogList = ({ setMessage, user }) => {
 
       setBlogs(sortBlogs(newBlogList))
 
-      setMessage({
-        type: ALERT_TYPE.SUCCESS,
-        content: `A new blog added: '${blog.title}'`,
-      })
-    } catch (error) {
-      const errorMessage = ErrorUtils.handleAxiosError(
-        error,
-        'Error creating blog. Please try again.'
+      dispatch(
+        setAlert({
+          type: ALERT_TYPES.SUCCESS,
+          message: 'New blog added',
+          details: `A new blog added: '${blog.title}'`,
+        })
       )
-
-      setMessage(errorMessage)
+    } catch (error) {
+      dispatch(
+        setErrorAlert({
+          message: 'Error creating blog. Please try again.',
+          details: error.errorMessage,
+          error,
+        })
+      )
     }
   }
 
@@ -59,12 +62,13 @@ const BlogList = ({ setMessage, user }) => {
 
       setBlogs(sortBlogs(updatedBlogs))
     } catch (error) {
-      const errorMessage = ErrorUtils.handleAxiosError(
-        error,
-        'Error liking blog. Please try again.'
+      dispatch(
+        setErrorAlert({
+          message: 'Error liking blog. Please try again.',
+          details: error.errorMessage,
+          error,
+        })
       )
-
-      setMessage(errorMessage)
     }
   }
 
@@ -82,17 +86,21 @@ const BlogList = ({ setMessage, user }) => {
 
       setBlogs(sortBlogs(updatedBlogs))
 
-      setMessage({
-        type: ALERT_TYPE.SUCCESS,
-        content: `Blog '${blog.title}' removed.`,
-      })
-    } catch (error) {
-      const errorMessage = ErrorUtils.handleAxiosError(
-        error,
-        'Error removing blog. Please try again.'
+      dispatch(
+        setAlert({
+          type: ALERT_TYPES.SUCCESS,
+          message: 'Blog removed',
+          details: `Blog '${blog.title}' removed.`,
+        })
       )
-
-      setMessage(errorMessage)
+    } catch (error) {
+      dispatch(
+        setErrorAlert({
+          message: 'Error removing blog. Please try again.',
+          details: error.errorMessage,
+          error,
+        })
+      )
     }
   }
 
