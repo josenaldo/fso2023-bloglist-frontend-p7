@@ -1,24 +1,26 @@
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { appConfig } from '@/data'
-import { Container, Link as MuiLink, Paper } from '@mui/material'
+import { useAuth, useLogoutMutation } from '@/features/auth'
+import { NavBar } from '@/features/layout'
 
 const Header = () => {
+  const navigate = useNavigate()
+  const auth = useAuth()
+
+  const [logout] = useLogoutMutation()
+
+  const handleLogout = async () => {
+    await logout()
+    navigate('/login')
+  }
+
   return (
-    <Paper component="header" elevation={1}>
-      <Container maxWidth="md">
-        <MuiLink
-          component={Link}
-          to="/"
-          sx={{
-            color: 'inherit',
-            textDecoration: 'none',
-          }}
-        >
-          <h1>{appConfig.application.name}</h1>
-        </MuiLink>
-      </Container>
-    </Paper>
+    <NavBar
+      name={appConfig.application.name}
+      user={auth.user}
+      logout={handleLogout}
+    />
   )
 }
 

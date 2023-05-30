@@ -21,11 +21,6 @@ export const loginApi = createApi({
       },
     }),
   }),
-  extraReducers: (builder) => {
-    builder.addMatcher(loginApi.endpoints.logout.matchFulfilled, (state) => {
-      state.user = null
-    })
-  },
 })
 
 export const { useLoginMutation, useLogoutMutation } = loginApi

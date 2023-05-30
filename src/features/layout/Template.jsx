@@ -1,4 +1,4 @@
-import { Header, Menu, Footer } from '@/features/layout'
+import { Header, Footer } from '@/features/layout'
 import { Alert } from '@/features/alert'
 import { Box, Container } from '@mui/material'
 
@@ -13,13 +13,14 @@ const Template = ({ children }) => {
       }}
     >
       <Header />
-      <Menu />
+
       <Alert />
 
       <Container
         maxWidth="md"
         sx={{
           flexGrow: 1,
+          my: 2,
         }}
       >
         <main>{children}</main>
