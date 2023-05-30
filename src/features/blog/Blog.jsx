@@ -11,14 +11,16 @@ import {
   Link,
   Typography,
 } from '@mui/material'
+import { LoadingButton } from '@mui/lab'
 
+import { useAuth } from '@/features/auth'
 import { useUpdateBlogMutation, useDeleteBlogMutation } from '@/features/blog'
 import { setErrorAlert, setAlert, ALERT_TYPES } from '@/features/alert'
 import './Blog.css'
-import { LoadingButton } from '@mui/lab'
 
-const Blog = ({ blog, user }) => {
+const Blog = ({ blog }) => {
   const dispatch = useDispatch()
+  const auth = useAuth()
   const [updateBlog] = useUpdateBlogMutation()
   const [deleteBlog] = useDeleteBlogMutation()
 
@@ -26,7 +28,7 @@ const Blog = ({ blog, user }) => {
   const buttonLabel = detailsVisible ? 'Hide' : 'View'
   const [loading, setLoading] = React.useState(false)
 
-  const isBlogOwner = blog.user.username === user.username
+  const isBlogOwner = blog.user.username === auth.user.username
 
   const handleLike = async (blog) => {
     setLoading(true)

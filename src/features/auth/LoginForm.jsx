@@ -1,15 +1,15 @@
 import React from 'react'
 
-import { useDispatch, useSelector } from 'react-redux'
-import { useLoginMutation } from '@/features/user'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { useLoginMutation } from '@/features/auth'
 import { ALERT_TYPES, setAlert, setErrorAlert } from '@/features/alert'
-import { appConfig } from '@/data'
 import { LoadingButton } from '@mui/lab'
 import { Card, CardActions, CardContent, Stack, TextField } from '@mui/material'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
-  const loggedUser = useSelector((state) => state.userApi.user)
+  const navigate = useNavigate()
 
   const [login, { isLoading }] = useLoginMutation()
 
@@ -21,13 +21,6 @@ const LoginForm = () => {
 
     try {
       const user = await login({ username, password }).unwrap()
-      console.log('🔴 LoginForm > Logged User', loggedUser)
-      console.log('🔴 LoginForm > User', user)
-
-      window.localStorage.setItem(
-        appConfig.LOGGED_USER_KEY,
-        JSON.stringify(user)
-      )
 
       dispatch(
         setAlert({
@@ -36,7 +29,12 @@ const LoginForm = () => {
           detail: `Welcome ${user.username}`,
         })
       )
+
+      navigate('/')
     } catch (error) {
+      setUsername('')
+      setPassword('')
+
       dispatch(
         setErrorAlert({
           message: 'Error',
@@ -45,9 +43,6 @@ const LoginForm = () => {
         })
       )
     }
-
-    setUsername('')
-    setPassword('')
   }
 
   return (

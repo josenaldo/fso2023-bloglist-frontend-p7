@@ -3,12 +3,17 @@ import { Route, Routes } from 'react-router-dom'
 import { Template } from '@/features/layout'
 import AboutPage from '@/pages/AboutPage'
 import HomePage from '@/pages/HomePage'
+import LoginPage from '@/pages/LoginPage'
+import { PrivateOutlet } from '@/features/auth'
 
 const IndexPage = () => {
   return (
     <Template>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<PrivateOutlet />}>
+          <Route index element={<HomePage />} />
+        </Route>
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/about" element={<AboutPage />} />
       </Routes>
     </Template>

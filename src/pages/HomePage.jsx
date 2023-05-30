@@ -1,35 +1,23 @@
 import React from 'react'
 
 import { BlogForm, BlogList } from '@/features/blog'
-import { LoginForm, UserAppbar } from '@/features/user'
-
-import { useSelector } from 'react-redux'
-
+import { UserAppbar } from '@/features/auth'
 import { Togglable } from '@/features/ui'
 
 const HomePage = () => {
-  const user = useSelector((state) => state.userApi.user)
-  console.log('🔴 User', user)
-
   const blogFormRef = React.useRef()
 
   return (
     <div>
       <h1>Blog list</h1>
 
-      {!user ? (
-        <LoginForm />
-      ) : (
-        <div>
-          <UserAppbar />
+      <UserAppbar />
 
-          <Togglable buttonLabel="New blog" ref={blogFormRef}>
-            <BlogForm />
-          </Togglable>
+      <Togglable buttonLabel="New blog" ref={blogFormRef}>
+        <BlogForm />
+      </Togglable>
 
-          <BlogList />
-        </div>
-      )}
+      <BlogList />
     </div>
   )
 }

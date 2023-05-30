@@ -1,21 +1,24 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { useLogoutMutation } from '@/features/user'
+import { useDispatch } from 'react-redux'
+import { useLogoutMutation } from '@/features/auth'
+
+import { useAuth } from '@/features/auth'
 
 const UserAppbar = () => {
   const dispatch = useDispatch()
+  const auth = useAuth()
+
   const [logout] = useLogoutMutation()
-  const user = useSelector((state) => state.userApi.user)
 
   const handleLogout = () => {
     dispatch(logout())
   }
 
-  if (!user) return null
+  if (!auth.user) return null
 
   return (
     <div>
-      Welcome {user.name}!{' '}
+      Welcome {auth.user.name}!{' '}
       <a
         href="#"
         role="button"
