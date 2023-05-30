@@ -1,81 +1,151 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import './Blog.css'
+import { useDispatch } from 'react-redux'
 
-const Blog = ({ blog, like, remove, user }) => {
+import {
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Link,
+  Typography,
+} from '@mui/material'
+
+import { useUpdateBlogMutation, useDeleteBlogMutation } from '@/features/blog'
+import { setErrorAlert, setAlert, ALERT_TYPES } from '@/features/alert'
+import './Blog.css'
+import { LoadingButton } from '@mui/lab'
+
+const Blog = ({ blog, user }) => {
+  const dispatch = useDispatch()
+  const [updateBlog] = useUpdateBlogMutation()
+  const [deleteBlog] = useDeleteBlogMutation()
+
   const [detailsVisible, setDetailsVisible] = React.useState(false)
   const buttonLabel = detailsVisible ? 'Hide' : 'View'
-  const buttonStyle = detailsVisible ? 'secondary' : 'primary'
   const [loading, setLoading] = React.useState(false)
 
   const isBlogOwner = blog.user.username === user.username
 
-  const handleLike = async () => {
+  const handleLike = async (blog) => {
     setLoading(true)
+    try {
+      const likedBlog = { ...blog, likes: blog.likes + 1 }
 
-    await like(blog)
-
+      updateBlog(likedBlog)
+    } catch (error) {
+      dispatch(
+        setErrorAlert({
+          message: 'Error liking blog. Please try again.',
+          details: error.errorMessage,
+          error,
+        })
+      )
+    }
     setLoading(false)
   }
 
+  const removeBlog = async (blog) => {
+    const confirmRemove = confirm(`Remove blog '${blog.title}'?`)
+
+    if (!confirmRemove) {
+      return
+    }
+
+    try {
+      deleteBlog(blog)
+
+      dispatch(
+        setAlert({
+          type: ALERT_TYPES.SUCCESS,
+          message: 'Blog removed',
+          details: `Blog '${blog.title}' removed.`,
+        })
+      )
+    } catch (error) {
+      dispatch(
+        setErrorAlert({
+          message: 'Error removing blog. Please try again.',
+          details: error.errorMessage,
+          error,
+        })
+      )
+    }
+  }
+
   return (
-    <article className="blog">
-      <div className="header">
-        <div>
-          <h2 className="title">{blog.title}</h2>
-          <div className="author">{blog.author}</div>
-        </div>
-        <div>
-          <div className="action-bar ">
-            {detailsVisible && isBlogOwner && (
-              <button
-                className="remove-button inline small danger"
-                onClick={remove}
-              >
-                Remove
-              </button>
-            )}
+    <Card sx={{ mt: 2 }}>
+      <CardContent>
+        <Box>
+          <Typography variant="h5" component="div" gutterBottom>
+            {blog.title}
+          </Typography>
+          <Typography variant="subtitle1">{blog.author}</Typography>
+        </Box>
 
-            {detailsVisible && (
-              <button className="like-button inline small" onClick={handleLike}>
-                Like
-              </button>
-            )}
-
-            <button
-              className={`view-button inline small ${buttonStyle}`}
-              onClick={() => {
-                setDetailsVisible(!detailsVisible)
-              }}
-            >
-              {buttonLabel}
-            </button>
-          </div>
-          <div className="progress-bar">{loading && <progress></progress>}</div>
-        </div>
-      </div>
-
-      {detailsVisible && (
-        <footer className="content">
-          <div>
-            URL:{' '}
-            <a
+        {detailsVisible && (
+          <Box
+            sx={{
+              mt: 3,
+              display: 'grid',
+              gridTemplateColumns: 'auto 1fr',
+              gap: '0.5rem',
+            }}
+          >
+            <Typography variant="body2">URL:</Typography>
+            <Link
               className="url"
               href={blog.url}
               target="_blank"
               rel="noopener noreferrer"
             >
               {blog.url}
-            </a>
-          </div>
-          <div className="likes">
-            Likes: {blog.likes}{' '}
-            {loading && <span className="loading" aria-busy={loading}></span>}
-          </div>
-          <div>Added by: {blog.user.name}</div>
-        </footer>
-      )}
-    </article>
+            </Link>
+
+            <Typography variant="body2">Likes:</Typography>
+            <Typography variant="body2">{blog.likes}</Typography>
+
+            <Typography variant="body2">Added by: </Typography>
+            <Typography variant="body2">{blog.user.name}</Typography>
+          </Box>
+        )}
+      </CardContent>
+      <CardActions>
+        {detailsVisible && isBlogOwner && (
+          <Button
+            color="error"
+            onClick={() => {
+              removeBlog(blog)
+            }}
+          >
+            Remove
+          </Button>
+        )}
+
+        {detailsVisible && (
+          <LoadingButton
+            color="primary"
+            loading={loading}
+            onClick={() => {
+              handleLike(blog)
+            }}
+          >
+            Like
+          </LoadingButton>
+        )}
+
+        <Button
+          onClick={() => {
+            setDetailsVisible(!detailsVisible)
+          }}
+          color={detailsVisible ? 'secondary' : 'primary'}
+          sx={{}}
+        >
+          {buttonLabel}
+        </Button>
+      </CardActions>
+    </Card>
   )
 }
 
@@ -91,8 +161,6 @@ Blog.propTypes = {
       username: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-  like: PropTypes.func.isRequired,
-  remove: PropTypes.func.isRequired,
   user: PropTypes.shape({
     name: PropTypes.string.isRequired,
     token: PropTypes.string.isRequired,

@@ -1,20 +1,31 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { useSelector, useDispatch } from 'react-redux'
+import { useLogoutMutation } from '@/features/user'
 
-const UserAppbar = ({ user, logout }) => {
+const UserAppbar = () => {
+  const dispatch = useDispatch()
+  const [logout] = useLogoutMutation()
+  const user = useSelector((state) => state.userApi.user)
+
+  const handleLogout = () => {
+    dispatch(logout())
+  }
+
+  if (!user) return null
+
   return (
     <div>
       Welcome {user.name}!{' '}
-      <a href="#" role="button" className="outline small" onClick={logout}>
+      <a
+        href="#"
+        role="button"
+        className="outline small"
+        onClick={handleLogout}
+      >
         Logout
       </a>
     </div>
   )
-}
-
-UserAppbar.propTypes = {
-  user: PropTypes.object.isRequired,
-  logout: PropTypes.func.isRequired,
 }
 
 export default UserAppbar

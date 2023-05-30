@@ -10,7 +10,11 @@ export const ERROR_CODES = {
   CANCELED: 'ERR_CANCELED',
 }
 
-export const createErrorDetails = (statusCode, errorMessage, errorDetails) => {
+export const createErrorDetails = ({
+  statusCode,
+  errorMessage,
+  errorDetails,
+}) => {
   let details = {}
 
   if (statusCode) {
@@ -28,7 +32,7 @@ export const createErrorDetails = (statusCode, errorMessage, errorDetails) => {
   return details
 }
 
-export const handleAxiosError = (error, message, details = null) => {
+export const handleError = (error, message, details = null) => {
   if (error === null) {
     return {
       type: ALERT_TYPES.ERROR,
@@ -41,8 +45,9 @@ export const handleAxiosError = (error, message, details = null) => {
 
   const response = error?.response
   const request = error?.request
-  const statusCode = response?.status
+  const data = error?.data
 
+  let statusCode = response?.status
   let errorMessage = null
   let errorDetails = null
 
@@ -64,11 +69,18 @@ export const handleAxiosError = (error, message, details = null) => {
     } else {
       errorMessage = error.message
     }
+  } else if (data) {
+    statusCode = error.status
+    errorMessage = data.error
   } else {
     errorMessage = error.message
   }
 
-  const errorObject = createErrorDetails(statusCode, errorMessage, errorDetails)
+  const errorObject = createErrorDetails({
+    statusCode,
+    errorMessage,
+    errorDetails,
+  })
 
   return {
     type: ALERT_TYPES.ERROR,

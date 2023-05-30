@@ -1,128 +1,44 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
+import { Blog } from '@/features/blog'
 
-import { blogService, BlogForm, Blog } from '@/features/blog'
-import { Togglable } from '@/features/ui'
+import { useGetBlogsQuery } from '@/features/blog'
+import { Box } from '@mui/material'
 
-import { setErrorAlert, setAlert, ALERT_TYPES } from '@/features/alert'
+const BlogList = () => {
+  const user = useSelector((state) => state.userApi.user)
+  // eslint-disable-next-line no-unused-vars
+  const { data: blogs, error, isLoading } = useGetBlogsQuery()
 
-const BlogList = ({ user }) => {
-  const dispatch = useDispatch()
-  const [blogs, setBlogs] = React.useState([])
-  const blogFormRef = React.useRef()
+  // const sortBlogs = (blogs) => {
+  //   return blogs.sort((a, b) => b.likes - a.likes)
+  // }
 
-  const sortBlogs = (blogs) => {
-    return blogs.sort((a, b) => b.likes - a.likes)
-  }
+  // React.useEffect(() => {
+  //   const fetchBlogs = async () => {
+  //     const blogs = await blogService.getAll()
+  //     setBlogs(sortBlogs(blogs))
+  //   }
 
-  React.useEffect(() => {
-    const fetchBlogs = async () => {
-      const blogs = await blogService.getAll()
-      setBlogs(sortBlogs(blogs))
-    }
+  //   fetchBlogs()
+  // }, [])
 
-    fetchBlogs()
-  }, [])
-
-  const createBlog = async (blog) => {
-    try {
-      const newBlog = await blogService.create(blog)
-
-      const newBlogList = [...blogs, newBlog]
-
-      setBlogs(sortBlogs(newBlogList))
-
-      dispatch(
-        setAlert({
-          type: ALERT_TYPES.SUCCESS,
-          message: 'New blog added',
-          details: `A new blog added: '${blog.title}'`,
-        })
-      )
-    } catch (error) {
-      dispatch(
-        setErrorAlert({
-          message: 'Error creating blog. Please try again.',
-          details: error.errorMessage,
-          error,
-        })
-      )
-    }
-  }
-
-  const like = async (blog) => {
-    try {
-      const likedBlog = await blogService.like(blog)
-
-      const updatedBlogs = blogs.map((b) => {
-        return b.id === blog.id ? likedBlog : b
-      })
-
-      setBlogs(sortBlogs(updatedBlogs))
-    } catch (error) {
-      dispatch(
-        setErrorAlert({
-          message: 'Error liking blog. Please try again.',
-          details: error.errorMessage,
-          error,
-        })
-      )
-    }
-  }
-
-  const removeBlog = async (blog) => {
-    const confirmRemove = confirm(`Remove blog '${blog.title}'?`)
-
-    if (!confirmRemove) {
-      return
-    }
-
-    try {
-      await blogService.remove(blog)
-
-      const updatedBlogs = blogs.filter((b) => b.id !== blog.id)
-
-      setBlogs(sortBlogs(updatedBlogs))
-
-      dispatch(
-        setAlert({
-          type: ALERT_TYPES.SUCCESS,
-          message: 'Blog removed',
-          details: `Blog '${blog.title}' removed.`,
-        })
-      )
-    } catch (error) {
-      dispatch(
-        setErrorAlert({
-          message: 'Error removing blog. Please try again.',
-          details: error.errorMessage,
-          error,
-        })
-      )
-    }
+  if (isLoading) {
+    return <div>Loading...</div>
   }
 
   return (
-    <div>
-      <Togglable buttonLabel="New blog" ref={blogFormRef}>
-        <BlogForm createBlog={createBlog} />
-      </Togglable>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem',
+      }}
+    >
       {blogs &&
-        blogs.map((blog) => (
-          <Blog
-            key={blog.id}
-            blog={blog}
-            like={async () => {
-              return like(blog)
-            }}
-            remove={async () => {
-              return removeBlog(blog)
-            }}
-            user={user}
-          />
-        ))}
-    </div>
+        blogs.map((blog) => <Blog key={blog.id} blog={blog} user={user} />)}
+    </Box>
   )
 }
 

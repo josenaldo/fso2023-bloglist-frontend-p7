@@ -1,23 +1,9 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { ALERT_TYPES, removeAlert } from '@/features/alert'
+import { Alert as MuiAlert, AlertTitle, Container } from '@mui/material'
 
-import styles from './Alert.module.css'
-
-/**
- * A component that displays an alert message.
- *
- * @function Alert
- * @returns {JSX.Element|null} The alert component or null if there is no alert to display.
- */
-
-const alertStyleMap = {
-  [ALERT_TYPES.ERROR]: styles.alertError,
-  [ALERT_TYPES.WARNING]: styles.alertWarning,
-  [ALERT_TYPES.SUCCESS]: styles.alertSuccess,
-  [ALERT_TYPES.INFO]: styles.alertInfo,
-}
+import { removeAlert } from '@/features/alert'
 
 const Alert = () => {
   const dispatch = useDispatch()
@@ -31,25 +17,14 @@ const Alert = () => {
     return null
   }
 
-  const selectAlertType = (type) => {
-    const alertType = alertStyleMap[type]
-
-    return alertType
-  }
-
   return (
-    <div className="container">
-      <div
-        className={`${styles.alert} ${selectAlertType(alert.type)}`}
-        role="alert"
-      >
-        <span className={styles.closeButton} onClick={close}>
-          &times;
-        </span>
-        <p className={styles.alertTitle}>{alert.message}</p>
+    <Container sx={{ my: 3 }} maxWidth="md">
+      <MuiAlert severity={alert.type} onClose={close} variant="outlined">
+        <AlertTitle>{alert.message}</AlertTitle>
+
         {alert.details && <p>{alert.details}</p>}
         {alert.error && (
-          <ul className={styles.details}>
+          <ul>
             {alert.error.statusCode && (
               <li>Status code: {alert.error.statusCode}</li>
             )}
@@ -61,8 +36,8 @@ const Alert = () => {
             )}
           </ul>
         )}
-      </div>
-    </div>
+      </MuiAlert>
+    </Container>
   )
 }
 

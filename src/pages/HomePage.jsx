@@ -1,69 +1,33 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
 
-import { appConfig } from '@/data'
-import { BlogList, blogService } from '@/features/blog'
-import { LoginForm, UserAppbar, loginService } from '@/features/user'
-import { setErrorAlert } from '@/features/alert'
+import { BlogForm, BlogList } from '@/features/blog'
+import { LoginForm, UserAppbar } from '@/features/user'
+
+import { useSelector } from 'react-redux'
+
+import { Togglable } from '@/features/ui'
 
 const HomePage = () => {
-  const [user, setUser] = React.useState(null)
-  const dispatch = useDispatch()
+  const user = useSelector((state) => state.userApi.user)
+  console.log('🔴 User', user)
 
-  React.useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem(
-      appConfig.LOGGED_USER_KEY
-    )
-
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      blogService.setToken(user.token)
-    } else {
-      setUser(null)
-      blogService.setToken(null)
-    }
-  }, [])
-
-  const login = async ({ username, password }) => {
-    try {
-      const user = await loginService.login({ username, password })
-
-      window.localStorage.setItem(
-        appConfig.LOGGED_USER_KEY,
-        JSON.stringify(user)
-      )
-
-      setUser(user)
-      blogService.setToken(user.token)
-    } catch (exception) {
-      setUser(null)
-      blogService.setToken(null)
-      dispatch(
-        setErrorAlert({
-          content: 'Incorrect username or password. Please try again.',
-          details: exception.message,
-          error: exception,
-        })
-      )
-    }
-  }
-
-  const logout = () => {
-    setUser(null)
-    window.localStorage.removeItem(appConfig.LOGGED_USER_KEY)
-  }
+  const blogFormRef = React.useRef()
 
   return (
     <div>
       <h1>Blog list</h1>
 
-      {user === null ? (
-        <LoginForm login={login} />
+      {!user ? (
+        <LoginForm />
       ) : (
         <div>
-          <UserAppbar user={user} logout={logout} />
-          <BlogList user={user} />
+          <UserAppbar />
+
+          <Togglable buttonLabel="New blog" ref={blogFormRef}>
+            <BlogForm />
+          </Togglable>
+
+          <BlogList />
         </div>
       )}
     </div>

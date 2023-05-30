@@ -1,18 +1,43 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { useDispatch } from 'react-redux'
 
-const BlogForm = ({ createBlog }) => {
+import { useCreateBlogMutation } from '@/features/blog'
+import { setErrorAlert, setAlert, ALERT_TYPES } from '@/features/alert'
+
+const BlogForm = () => {
+  const dispatch = useDispatch()
+  const [createBlog] = useCreateBlogMutation()
+
   const [title, setTitle] = React.useState('')
   const [author, setAuthor] = React.useState('')
   const [url, setUrl] = React.useState('')
 
-  const handleCreateBlog = (event) => {
+  const handleCreateBlog = async (event) => {
     event.preventDefault()
+    try {
+      const blog = { title, author, url }
+      const newBlog = await createBlog(blog).unwrap()
 
-    createBlog({ title, author, url })
-    setTitle('')
-    setAuthor('')
-    setUrl('')
+      dispatch(
+        setAlert({
+          type: ALERT_TYPES.SUCCESS,
+          message: 'New blog added',
+          details: `A new blog added: '${newBlog.title}'`,
+        })
+      )
+
+      setTitle('')
+      setAuthor('')
+      setUrl('')
+    } catch (error) {
+      dispatch(
+        setErrorAlert({
+          message: 'Error creating blog. Please try again.',
+          details: error.errorMessage,
+          error,
+        })
+      )
+    }
   }
 
   return (
@@ -55,10 +80,6 @@ const BlogForm = ({ createBlog }) => {
       </button>
     </form>
   )
-}
-
-BlogForm.propTypes = {
-  createBlog: PropTypes.func.isRequired,
 }
 
 export default BlogForm
