@@ -1,4 +1,4 @@
-export { Footer } from './Footer'
-export { Header } from './Header'
-export { Menu } from './Menu'
-export { Template } from './Template'
+export { default as Footer } from './Footer'
+export { default as Header } from './Header'
+export { default as Menu } from './Menu'
+export { default as Template } from './Template'

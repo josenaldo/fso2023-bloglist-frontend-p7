@@ -7,7 +7,7 @@ import { menuConfig } from '@/data'
 const Menu = () => {
   return (
     <Paper component="nav" elevation={3} sx={{ py: 2 }}>
-      <Container>
+      <Container maxWidth="md">
         <Box
           sx={{
             display: 'flex',

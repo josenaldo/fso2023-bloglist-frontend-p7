@@ -6,7 +6,7 @@ import { Container, Link as MuiLink, Paper } from '@mui/material'
 const Header = () => {
   return (
     <Paper component="header" elevation={1}>
-      <Container>
+      <Container maxWidth="md">
         <MuiLink
           component={Link}
           to="/"
