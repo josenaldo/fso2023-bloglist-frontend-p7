@@ -1,6 +1,7 @@
+import { BlogList } from '@/features/blog'
 import React from 'react'
 
-import { BlogForm, BlogList } from '@/features/blog'
+import { BlogForm } from '@/features/blog'
 import { Togglable } from '@/features/ui'
 
 const HomePage = () => {

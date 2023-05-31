@@ -1,16 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Box, Button } from '@mui/material'
 
-/**
- * A reusable component for toggling the visibility of child components on a page.
- *
- * @component
- * @param {Object} props - The props object
- * @param {string} props.buttonLabel - The label for the toggle button
- * @param {React.ReactNode} props.children - The child components to be toggled
- * @param {React.Ref} refs - The ref object passed to the component
- * @return {JSX.Element} - The rendered component
- */
 const Togglable = React.forwardRef(({ buttonLabel, children }, refs) => {
   const [visible, setVisible] = React.useState(false)
 
@@ -26,21 +17,29 @@ const Togglable = React.forwardRef(({ buttonLabel, children }, refs) => {
 
   if (!visible) {
     return (
-      <article>
-        <button onClick={toggleVisibility}>{buttonLabel}</button>
-      </article>
+      <Box>
+        <Button variant="outlined" color="primary" onClick={toggleVisibility}>
+          {buttonLabel}
+        </Button>
+      </Box>
     )
   }
 
   return (
-    <article>
-      <div>
-        {children}
-        <button className="cancel-button secondary" onClick={toggleVisibility}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem',
+      }}
+    >
+      <Box>{children}</Box>
+      <Box>
+        <Button variant="outlined" color="secondary" onClick={toggleVisibility}>
           Cancel
-        </button>
-      </div>
-    </article>
+        </Button>
+      </Box>
+    </Box>
   )
 })
 

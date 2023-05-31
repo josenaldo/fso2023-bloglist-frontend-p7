@@ -1,12 +1,14 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
+import { Box, Card, CardActions, CardContent, TextField } from '@mui/material'
+import { LoadingButton } from '@mui/lab'
 
 import { useCreateBlogMutation } from '@/features/blog'
 import { setErrorAlert, setAlert, ALERT_TYPES } from '@/features/alert'
 
 const BlogForm = () => {
   const dispatch = useDispatch()
-  const [createBlog] = useCreateBlogMutation()
+  const [createBlog, { isLoading }] = useCreateBlogMutation()
 
   const [title, setTitle] = React.useState('')
   const [author, setAuthor] = React.useState('')
@@ -42,42 +44,53 @@ const BlogForm = () => {
 
   return (
     <form onSubmit={handleCreateBlog}>
-      <h2>Create a new blog</h2>
-      <div className="grid">
-        <label>
-          Title
-          <input
-            id="title"
-            type="text"
-            name="Title"
-            value={title}
-            onChange={({ target }) => setTitle(target.value)}
-          />
-        </label>
-        <label>
-          Author
-          <input
-            id="author"
-            type="text"
-            name="Author"
-            value={author}
-            onChange={({ target }) => setAuthor(target.value)}
-          />
-        </label>
-        <label>
-          Url
-          <input
-            id="url"
-            type="text"
-            name="Url"
-            value={url}
-            onChange={({ target }) => setUrl(target.value)}
-          />
-        </label>
-      </div>
-      <button id="create-blog-button" type="submit">
-        Create
-      </button>
+      <Card elevation={1}>
+        <CardContent>
+          <h2>Create a new blog</h2>
+
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1rem',
+            }}
+          >
+            <TextField
+              id="title"
+              type="text"
+              value={title}
+              name="title"
+              label="Title"
+              onChange={({ target }) => setTitle(target.value)}
+            />
+            <TextField
+              id="author"
+              type="text"
+              value={author}
+              name="author"
+              label="Author"
+              onChange={({ target }) => setAuthor(target.value)}
+            />
+            <TextField
+              id="url"
+              type="text"
+              value={url}
+              name="url"
+              label="URL"
+              onChange={({ target }) => setUrl(target.value)}
+            />
+          </Box>
+        </CardContent>
+        <CardActions>
+          <LoadingButton
+            id="create-blog-button"
+            type="submit"
+            loading={isLoading}
+          >
+            Create
+          </LoadingButton>
+        </CardActions>
+      </Card>
     </form>
   )
 }
