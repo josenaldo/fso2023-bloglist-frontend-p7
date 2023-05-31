@@ -1,6 +1,13 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { Box, Card, CardActions, CardContent, TextField } from '@mui/material'
+import {
+  Box,
+  Card,
+  CardActions,
+  CardContent,
+  TextField,
+  Typography,
+} from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 
 import { useCreateBlogMutation } from '@/features/blog'
@@ -46,8 +53,6 @@ const BlogForm = () => {
     <form onSubmit={handleCreateBlog}>
       <Card elevation={1}>
         <CardContent>
-          <h2>Create a new blog</h2>
-
           <Box
             sx={{
               display: 'flex',
@@ -55,6 +60,7 @@ const BlogForm = () => {
               gap: '1rem',
             }}
           >
+            <Typography variant="h4">Create a new blog</Typography>
             <TextField
               id="title"
               type="text"

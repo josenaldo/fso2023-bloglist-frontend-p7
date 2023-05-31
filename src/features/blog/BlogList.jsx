@@ -8,8 +8,7 @@ import { Box } from '@mui/material'
 
 const BlogList = () => {
   const user = useSelector((state) => state.userApi.user)
-  // eslint-disable-next-line no-unused-vars
-  const { data: blogs, error, isLoading } = useGetBlogsQuery()
+  const { data: blogs, isLoading } = useGetBlogsQuery()
 
   // const sortBlogs = (blogs) => {
   //   return blogs.sort((a, b) => b.likes - a.likes)
@@ -34,6 +33,7 @@ const BlogList = () => {
         display: 'flex',
         flexDirection: 'column',
         gap: '1rem',
+        mt: '2rem',
       }}
     >
       {blogs &&
