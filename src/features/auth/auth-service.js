@@ -14,15 +14,9 @@ export const loginApi = createApi({
         body: credentials,
       }),
     }),
-    logout: builder.mutation({
-      query: () => {
-        localStorage.removeItem(appConfig.application.LOGGED_USER_KEY)
-        return '/logout'
-      },
-    }),
   }),
 })
 
-export const { useLoginMutation, useLogoutMutation } = loginApi
+export const { useLoginMutation } = loginApi
 
 export default loginApi

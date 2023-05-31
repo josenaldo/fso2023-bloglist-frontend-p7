@@ -5,7 +5,6 @@ const PrivateOutlet = () => {
   const auth = useAuth()
   const location = useLocation()
 
-  console.log('🔴 PrivateOutlet > auth', auth)
   return auth.user ? (
     <Outlet />
   ) : (

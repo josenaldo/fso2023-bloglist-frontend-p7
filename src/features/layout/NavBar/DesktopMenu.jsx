@@ -8,7 +8,7 @@ const DesktopMenu = ({ user, logout }) => {
   return (
     <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
       {pages.map((page) => (
-        <DesktopMenuItem key={page.link} item={{ ...page, component: Link }} />
+        <DesktopMenuItem key={page.to} item={{ ...page, component: Link }} />
       ))}
 
       {user ? (

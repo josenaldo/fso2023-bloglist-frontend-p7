@@ -4,12 +4,12 @@ import { appConfig } from '@/data'
 export const blogApi = createApi({
   reducerPath: 'blogApi',
   baseQuery: (args, api, extraOptions) => {
-    const user = api.getState().userApi.user
-    const token = user?.token
-
     return fetchBaseQuery({
       baseUrl: `${appConfig.application.BACKEND}/api`,
       prepareHeaders: (headers) => {
+        const user = api.getState().userApi.user
+        const token = user?.token
+
         if (token) {
           headers.set('Authorization', `Bearer ${token}`)
         }

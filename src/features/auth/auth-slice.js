@@ -17,10 +17,15 @@ const getLoggedUser = () => {
   return { user }
 }
 
-const slice = createSlice({
+const authSlice = createSlice({
   name: 'auth',
   initialState: getLoggedUser(),
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      localStorage.removeItem(appConfig.application.LOGGED_USER_KEY)
+      state.user = null
+    },
+  },
   extraReducers: (builder) => {
     builder.addMatcher(
       loginApi.endpoints.login.matchFulfilled,
@@ -29,16 +34,13 @@ const slice = createSlice({
           appConfig.application.LOGGED_USER_KEY,
           JSON.stringify(payload)
         )
+
         state.user = payload
       }
     )
-
-    builder.addMatcher(loginApi.endpoints.logout.matchFulfilled, (state) => {
-      state.user = null
-    })
   },
 })
 
-export default slice.reducer
-
 export const selectCurrentUser = (state) => state.auth.user
+export const { logout } = authSlice.actions
+export default authSlice.reducer

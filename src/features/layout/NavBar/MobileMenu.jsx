@@ -41,7 +41,7 @@ const MobileMenu = ({ user, logout, mobileOpen, handleDrawerToggle }) => {
       <List>
         {pages.map((page) => (
           <MobileMenuItem
-            key={page.link}
+            key={page.to}
             item={{
               ...page,
               component: Link,

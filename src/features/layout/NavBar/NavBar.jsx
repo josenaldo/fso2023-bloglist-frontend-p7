@@ -1,47 +1,75 @@
 import React from 'react'
 
-import { AppBar, IconButton, Toolbar, Link as MuiLink } from '@mui/material'
+import {
+  AppBar,
+  IconButton,
+  Toolbar,
+  Link as MuiLink,
+  Box,
+} from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 
 import Logo from './Logo'
 import DesktopMenu from './DesktopMenu'
 import MobileMenu from './MobileMenu'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth, logout } from '@/features/auth'
+import { useDispatch } from 'react-redux'
 
-const NavBar = ({ user, logout }) => {
+const NavBar = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const auth = useAuth()
+
   const [mobileOpen, setMobileOpen] = React.useState(false)
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState)
   }
 
+  const handleLogout = async () => {
+    dispatch(logout())
+    navigate('/login')
+  }
+
   return (
     <AppBar component="nav" position="sticky">
-      <Toolbar>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="start"
-          onClick={handleDrawerToggle}
-          sx={{ mr: 2, display: { sm: 'none' } }}
+      <Toolbar
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+          }}
         >
-          <MenuIcon />
-        </IconButton>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: 'none' } }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <MuiLink
+            component={Link}
+            to="/"
+            sx={{ color: 'inherit', textDecoration: 'none' }}
+          >
+            <Logo />
+          </MuiLink>
+        </Box>
 
-        <MuiLink
-          component={Link}
-          to="/"
-          sx={{ color: 'inherit', textDecoration: 'none' }}
-        >
-          <Logo />
-        </MuiLink>
-
-        <DesktopMenu user={user} logout={logout} />
+        <DesktopMenu user={auth.user} logout={handleLogout} />
       </Toolbar>
 
       <MobileMenu
-        user={user}
-        logout={logout}
+        user={auth.user}
+        logout={handleLogout}
         mobileOpen={mobileOpen}
         handleDrawerToggle={handleDrawerToggle}
       />
