@@ -2,22 +2,15 @@ import { Link } from 'react-router-dom'
 import { Box, Button } from '@mui/material'
 import LoginIcon from '@mui/icons-material/Login'
 import LogoutIcon from '@mui/icons-material/Logout'
+import { pages } from '@/data'
 
-const DesktopMenu = ({ navItems, user, logout }) => {
+const DesktopMenu = ({ user, logout }) => {
   return (
     <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
-      {navItems.map((item) => (
-        <DesktopMenuItem key={item.link} item={item} />
+      {pages.map((page) => (
+        <DesktopMenuItem key={page.link} item={{ ...page, component: Link }} />
       ))}
 
-      <UserButton user={user} logout={logout} />
-    </Box>
-  )
-}
-
-const UserButton = ({ user, logout }) => {
-  return (
-    <>
       {user ? (
         <DesktopMenuItem
           item={{
@@ -25,7 +18,7 @@ const UserButton = ({ user, logout }) => {
             text: `${user.name} logged in`,
             onClick: logout,
           }}
-          showIcon={true}
+          showIcon
         />
       ) : (
         <DesktopMenuItem
@@ -33,21 +26,19 @@ const UserButton = ({ user, logout }) => {
             icon: LoginIcon,
             text: 'Login',
             link: '/login',
+            component: Link,
           }}
-          showIcon={true}
+          showIcon
         />
       )}
-    </>
+    </Box>
   )
 }
 
 const DesktopMenuItem = ({ item, showIcon = false }) => {
-  const buttonProps = item.onClick
-    ? { onClick: item.onClick }
-    : { component: Link, to: item.link }
-
-  if (showIcon && item.icon) {
-    buttonProps.endIcon = <item.icon />
+  const buttonProps = {
+    ...item,
+    endIcon: showIcon && item.icon ? <item.icon /> : undefined,
   }
 
   return <Button {...buttonProps}>{item.text}</Button>

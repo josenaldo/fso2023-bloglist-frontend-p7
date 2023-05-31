@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import {
+  Avatar,
   Box,
   Divider,
   Drawer,
@@ -12,33 +13,47 @@ import {
 } from '@mui/material'
 import LoginIcon from '@mui/icons-material/Login'
 import LogoutIcon from '@mui/icons-material/Logout'
+import PersonIcon from '@mui/icons-material/Person'
 
-const drawerWidth = 240
+import { pages } from '@/data'
 
-const MobileMenu = ({
-  navItems,
-  user,
-  logout,
-  mobileOpen,
-  handleDrawerToggle,
-}) => {
+const MobileMenu = ({ user, logout, mobileOpen, handleDrawerToggle }) => {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        Notes Router MUI
-      </Typography>
-
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          p: 2,
+          gap: 2,
+        }}
+      >
+        <Avatar sx={{ bgcolor: 'primary.main' }}>
+          {user ? user.name[0] : <PersonIcon />}
+        </Avatar>
+        <Typography variant="h6" component="div">
+          {user ? user.name : 'Guest'}
+        </Typography>
+      </Box>
       <Divider />
 
       <List>
-        {navItems.map((item) => (
-          <MobileMenuItem key={item.link} item={item} />
+        {pages.map((page) => (
+          <MobileMenuItem
+            key={page.link}
+            item={{
+              ...page,
+              component: Link,
+            }}
+          />
         ))}
+
         {user ? (
           <MobileMenuItem
             item={{
               icon: LogoutIcon,
-              text: `${user.name} logged in`,
+              text: 'Logout',
               onClick: logout,
             }}
           />
@@ -47,7 +62,8 @@ const MobileMenu = ({
             item={{
               icon: LoginIcon,
               text: 'Login',
-              link: '/login',
+              to: '/login',
+              component: Link,
             }}
           />
         )}
@@ -67,7 +83,7 @@ const MobileMenu = ({
           display: { xs: 'block', sm: 'none' },
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
-            width: drawerWidth,
+            width: 240,
           },
         }}
       >
@@ -78,13 +94,9 @@ const MobileMenu = ({
 }
 
 const MobileMenuItem = ({ item }) => {
-  const buttonProps = item.onClick
-    ? { onClick: item.onClick }
-    : { component: Link, to: item.link }
-
   return (
     <ListItem disablePadding>
-      <ListItemButton {...buttonProps} component={Link}>
+      <ListItemButton {...item}>
         <ListItemIcon>
           <item.icon />
         </ListItemIcon>

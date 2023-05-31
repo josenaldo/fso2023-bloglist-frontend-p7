@@ -1,15 +1,14 @@
 import React from 'react'
 
-import { AppBar, IconButton, Toolbar } from '@mui/material'
+import { AppBar, IconButton, Toolbar, Link as MuiLink } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
-
-import { pages } from '@/data'
 
 import Logo from './Logo'
 import DesktopMenu from './DesktopMenu'
 import MobileMenu from './MobileMenu'
+import { Link } from 'react-router-dom'
 
-const NavBar = ({ name, user, logout }) => {
+const NavBar = ({ user, logout }) => {
   const [mobileOpen, setMobileOpen] = React.useState(false)
 
   const handleDrawerToggle = () => {
@@ -29,13 +28,18 @@ const NavBar = ({ name, user, logout }) => {
           <MenuIcon />
         </IconButton>
 
-        <Logo name={name} />
+        <MuiLink
+          component={Link}
+          to="/"
+          sx={{ color: 'inherit', textDecoration: 'none' }}
+        >
+          <Logo />
+        </MuiLink>
 
-        <DesktopMenu navItems={pages} user={user} logout={logout} />
+        <DesktopMenu user={user} logout={logout} />
       </Toolbar>
 
       <MobileMenu
-        navItems={pages}
         user={user}
         logout={logout}
         mobileOpen={mobileOpen}

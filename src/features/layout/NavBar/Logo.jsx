@@ -1,13 +1,10 @@
 import { Typography } from '@mui/material'
+import { appConfig } from '@/data'
 
-const Logo = ({ name }) => {
+const Logo = ({ sx }) => {
   return (
-    <Typography
-      variant="h6"
-      component="div"
-      sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-    >
-      {name}
+    <Typography variant="h6" component="div" sx={{ flexGrow: 1, ...sx }}>
+      {appConfig.application.name}
     </Typography>
   )
 }

@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom'
 
-import { appConfig } from '@/data'
 import { useAuth, useLogoutMutation } from '@/features/auth'
 import { NavBar } from '@/features/layout'
 
@@ -15,13 +14,7 @@ const Header = () => {
     navigate('/login')
   }
 
-  return (
-    <NavBar
-      name={appConfig.application.name}
-      user={auth.user}
-      logout={handleLogout}
-    />
-  )
+  return <NavBar user={auth.user} logout={handleLogout} />
 }
 
 export default Header

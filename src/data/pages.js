@@ -5,17 +5,17 @@ import PeopleIcon from '@mui/icons-material/People'
 const pages = [
   {
     text: 'Home',
-    link: '/',
+    to: '/',
     icon: HomeIcon,
   },
   {
     text: 'Blogs',
-    link: '/blogs',
+    to: '/blogs',
     icon: NoteIcon,
   },
   {
     text: 'About',
-    link: '/about',
+    to: '/about',
     icon: PeopleIcon,
   },
 ]
