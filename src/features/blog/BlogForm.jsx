@@ -1,17 +1,11 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import {
-  Box,
-  Card,
-  CardActions,
-  CardContent,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { Box, Card, CardActions, CardContent, TextField } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 
 import { useCreateBlogMutation } from '@/features/blog'
 import { setErrorAlert, setAlert, ALERT_TYPES } from '@/features/alert'
+import { CardTitle } from '@/features/ui'
 
 const BlogForm = () => {
   const dispatch = useDispatch()
@@ -60,7 +54,7 @@ const BlogForm = () => {
               gap: '1rem',
             }}
           >
-            <Typography variant="h4">Create a new blog</Typography>
+            <CardTitle>Create a new blog</CardTitle>
             <TextField
               id="title"
               type="text"

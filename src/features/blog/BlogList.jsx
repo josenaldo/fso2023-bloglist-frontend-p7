@@ -1,10 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-import { Blog } from '@/features/blog'
 
-import { useGetBlogsQuery } from '@/features/blog'
 import { Box } from '@mui/material'
+
+import { Blog, useGetBlogsQuery } from '@/features/blog'
+
+import { Loading } from '@/features/ui'
 
 const BlogList = () => {
   const user = useSelector((state) => state.userApi.user)
@@ -24,7 +26,7 @@ const BlogList = () => {
   // }, [])
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <Loading loading={isLoading} />
   }
 
   return (

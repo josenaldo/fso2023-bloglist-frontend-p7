@@ -9,7 +9,6 @@ import {
   CardActions,
   CardContent,
   Link,
-  Paper,
   Typography,
 } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
@@ -17,13 +16,14 @@ import { LoadingButton } from '@mui/lab'
 import { useAuth } from '@/features/auth'
 import { useLikeBlogMutation, useDeleteBlogMutation } from '@/features/blog'
 import { setErrorAlert, setAlert, ALERT_TYPES } from '@/features/alert'
-import './Blog.css'
+import { CardTitle, YesNoDialog } from '@/features/ui'
 
 const Blog = ({ blog }) => {
   const dispatch = useDispatch()
   const auth = useAuth()
   const [likeBlog, { isLoading: isLikeLoading }] = useLikeBlogMutation()
   const [deleteBlog] = useDeleteBlogMutation()
+  const [openConfirmRemove, setOpenConfirmRemove] = React.useState(false)
 
   const [detailsVisible, setDetailsVisible] = React.useState(false)
   const buttonLabel = detailsVisible ? 'Hide' : 'View'
@@ -52,12 +52,6 @@ const Blog = ({ blog }) => {
   }
 
   const removeBlog = async (blog) => {
-    const confirmRemove = confirm(`Remove blog '${blog.title}'?`)
-
-    if (!confirmRemove) {
-      return
-    }
-
     try {
       deleteBlog(blog.id)
 
@@ -81,11 +75,17 @@ const Blog = ({ blog }) => {
 
   return (
     <Card sx={{ mt: 2 }}>
+      <YesNoDialog
+        open={openConfirmRemove}
+        onYes={() => removeBlog(blog)}
+        onNo={() => setOpenConfirmRemove(false)}
+        title="Confirmação"
+        message={`Deseja remover o blog '${blog.title}'`}
+      />
       <CardContent>
         <Box>
-          <Typography variant="h5" component="div" gutterBottom>
-            {blog.title}
-          </Typography>
+          <CardTitle>{blog.title}</CardTitle>
+
           <Typography
             variant="subtitle1"
             fontStyle="italic"
@@ -96,14 +96,13 @@ const Blog = ({ blog }) => {
         </Box>
 
         {detailsVisible && (
-          <Paper
+          <Box
             sx={{
               mt: 3,
               display: 'grid',
               gridTemplateColumns: 'auto 1fr',
               gap: '0.5rem',
-              padding: '1rem',
-              borderRadius: '0.5rem',
+              px: '1rem',
             }}
             elevation={7}
           >
@@ -122,7 +121,7 @@ const Blog = ({ blog }) => {
 
             <Typography variant="body2">Added by: </Typography>
             <Typography variant="body2">{blog.user.name}</Typography>
-          </Paper>
+          </Box>
         )}
       </CardContent>
       <CardActions>
@@ -130,7 +129,7 @@ const Blog = ({ blog }) => {
           <Button
             color="error"
             onClick={() => {
-              removeBlog(blog)
+              setOpenConfirmRemove(true)
             }}
           >
             Remove
