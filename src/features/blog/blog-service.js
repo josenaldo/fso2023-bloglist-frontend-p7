@@ -1,73 +1,84 @@
-import axios from 'axios'
-
-/**
- * The base URL for the API.
- * @constant {string}
- */
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { appConfig } from '@/data'
 
-const baseUrl = `${appConfig.application.BACKEND}/api/blogs`
+export const blogApi = createApi({
+  reducerPath: 'blogApi',
+  baseQuery: (args, api, extraOptions) => {
+    return fetchBaseQuery({
+      baseUrl: `${appConfig.application.BACKEND}/api`,
+      prepareHeaders: (headers) => {
+        const user = api.getState()?.auth?.user
+        const token = user?.token
 
-/**
- * The token to authenticate requests.
- * @type {string}
- */
-let token = null
+        if (token) {
+          headers.set('Authorization', `Bearer ${token}`)
+        }
+        return headers
+      },
+    })(args, api, extraOptions)
+  },
+  endpoints: (builder) => ({
+    getBlogs: builder.query({
+      query: () => '/blogs',
+      providesTags: (result) => {
+        const defaultBlogListTag = [{ type: 'Blogs', id: 'LIST' }]
 
-/**
- * Sets the token for authentication.
- * @function
- * @param {string} newToken - The new token to be set for authentication.
- */
-const setToken = (newToken) => {
-  token = `bearer ${newToken}`
-}
+        const extractedBlogTags = result.map(({ id }) => ({
+          type: 'Blogs',
+          id,
+        }))
 
-/**
- * Retrieves all the blogs.
- * @function
- * @async
- * @returns {Promise<Array>} A promise that resolves to an array of all the blogs.
- */
-const getAll = async () => {
-  const response = await axios.get(baseUrl)
-  return response.data
-}
+        extractedBlogTags.push({ type: 'Blogs', id: 'LIST' })
 
-/**
- * Creates a new blog.
- * @function
- * @async
- * @param {Object} blog - The blog object to be created.
- * @returns {Promise<Object>} A promise that resolves to the new blog object.
- */
-const create = async (blog) => {
-  const config = {
-    headers: { Authorization: token },
-  }
+        const blogTags = result ? extractedBlogTags : defaultBlogListTag
 
-  const response = await axios.post(baseUrl, blog, config)
+        return blogTags
+      },
+    }),
+    getBlog: builder.query({
+      query: (id) => `/blogs/${id}`,
+      providesTags: (result, error, id) => [{ type: 'Blogs', id }],
+    }),
+    createBlog: builder.mutation({
+      query: (blog) => ({
+        url: '/blogs',
+        method: 'POST',
+        body: blog,
+      }),
+      invalidatesTags: [{ type: 'Blogs', id: 'LIST' }],
+    }),
+    updateBlog: builder.mutation({
+      query: ({ id, ...blog }) => ({
+        url: `/blogs/${id}`,
+        method: 'PUT',
+        body: blog,
+      }),
+      invalidatesTags: (result, error, { id }) => [{ type: 'Blogs', id }],
+    }),
+    deleteBlog: builder.mutation({
+      query: (id) => ({
+        url: `/blogs/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: (result, error, id) => [{ type: 'Blogs', id }],
+    }),
+    likeBlog: builder.mutation({
+      query: (id) => ({
+        url: `/blogs/${id}/like`,
+        method: 'POST',
+      }),
+      invalidatesTags: (result, error, id) => [{ type: 'Blogs', id }],
+    }),
+  }),
+})
 
-  return response.data
-}
+export const {
+  useGetBlogsQuery,
+  useGetBlogQuery,
+  useCreateBlogMutation,
+  useUpdateBlogMutation,
+  useDeleteBlogMutation,
+  useLikeBlogMutation,
+} = blogApi
 
-const like = async (blog) => {
-  const config = {
-    headers: { Authorization: token },
-  }
-  const response = await axios.post(`${baseUrl}/${blog.id}/likes`, null, config)
-
-  return response.data
-}
-
-const remove = async (blog) => {
-  const config = {
-    headers: { Authorization: token },
-  }
-
-  const response = await axios.delete(`${baseUrl}/${blog.id}`, config)
-
-  return response.data
-}
-
-export default { setToken, getAll, create, remove, like }
+export default blogApi

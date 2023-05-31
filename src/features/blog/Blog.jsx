@@ -9,33 +9,37 @@ import {
   CardActions,
   CardContent,
   Link,
+  Paper,
   Typography,
 } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 
 import { useAuth } from '@/features/auth'
-import { useUpdateBlogMutation, useDeleteBlogMutation } from '@/features/blog'
+import { useLikeBlogMutation, useDeleteBlogMutation } from '@/features/blog'
 import { setErrorAlert, setAlert, ALERT_TYPES } from '@/features/alert'
 import './Blog.css'
 
 const Blog = ({ blog }) => {
   const dispatch = useDispatch()
   const auth = useAuth()
-  const [updateBlog] = useUpdateBlogMutation()
+  const [likeBlog, { isLoading: isLikeLoading }] = useLikeBlogMutation()
   const [deleteBlog] = useDeleteBlogMutation()
 
   const [detailsVisible, setDetailsVisible] = React.useState(false)
   const buttonLabel = detailsVisible ? 'Hide' : 'View'
-  const [loading, setLoading] = React.useState(false)
 
   const isBlogOwner = blog.user.username === auth.user.username
 
   const handleLike = async (blog) => {
-    setLoading(true)
     try {
-      const likedBlog = { ...blog, likes: blog.likes + 1 }
-
-      updateBlog(likedBlog)
+      likeBlog(blog.id)
+      dispatch(
+        setAlert({
+          type: ALERT_TYPES.INFO,
+          message: 'Blog liked',
+          details: `Blog '${blog.title}' liked.`,
+        })
+      )
     } catch (error) {
       dispatch(
         setErrorAlert({
@@ -45,7 +49,6 @@ const Blog = ({ blog }) => {
         })
       )
     }
-    setLoading(false)
   }
 
   const removeBlog = async (blog) => {
@@ -56,7 +59,7 @@ const Blog = ({ blog }) => {
     }
 
     try {
-      deleteBlog(blog)
+      deleteBlog(blog.id)
 
       dispatch(
         setAlert({
@@ -83,17 +86,26 @@ const Blog = ({ blog }) => {
           <Typography variant="h5" component="div" gutterBottom>
             {blog.title}
           </Typography>
-          <Typography variant="subtitle1">{blog.author}</Typography>
+          <Typography
+            variant="subtitle1"
+            fontStyle="italic"
+            color="text.secondary"
+          >
+            by {blog.author}
+          </Typography>
         </Box>
 
         {detailsVisible && (
-          <Box
+          <Paper
             sx={{
               mt: 3,
               display: 'grid',
               gridTemplateColumns: 'auto 1fr',
               gap: '0.5rem',
+              padding: '1rem',
+              borderRadius: '0.5rem',
             }}
+            elevation={7}
           >
             <Typography variant="body2">URL:</Typography>
             <Link
@@ -110,7 +122,7 @@ const Blog = ({ blog }) => {
 
             <Typography variant="body2">Added by: </Typography>
             <Typography variant="body2">{blog.user.name}</Typography>
-          </Box>
+          </Paper>
         )}
       </CardContent>
       <CardActions>
@@ -128,7 +140,7 @@ const Blog = ({ blog }) => {
         {detailsVisible && (
           <LoadingButton
             color="primary"
-            loading={loading}
+            loading={isLikeLoading}
             onClick={() => {
               handleLike(blog)
             }}
