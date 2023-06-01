@@ -1,47 +1,29 @@
 import { Link } from 'react-router-dom'
 import { Box, Button } from '@mui/material'
-import LoginIcon from '@mui/icons-material/Login'
-import LogoutIcon from '@mui/icons-material/Logout'
 import { pages } from '@/data'
 
-const DesktopMenu = ({ user, logout }) => {
+const DesktopMenu = ({ user }) => {
   return (
     <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
-      {pages.map((page) => (
-        <DesktopMenuItem key={page.to} item={{ ...page, component: Link }} />
-      ))}
+      {pages.map((page) => {
+        const shoulRenderItem = (page.protected && user) || !page.protected
 
-      {user ? (
-        <DesktopMenuItem
-          item={{
-            icon: LogoutIcon,
-            text: `${user.name} logged in`,
-            onClick: logout,
-          }}
-          showIcon
-        />
-      ) : (
-        <DesktopMenuItem
-          item={{
-            icon: LoginIcon,
-            text: 'Login',
-            link: '/login',
+        if (shoulRenderItem) {
+          const linkProps = {
+            to: page.to,
             component: Link,
-          }}
-          showIcon
-        />
-      )}
+          }
+          return (
+            <Button key={page.to} {...linkProps}>
+              {page.text}
+            </Button>
+          )
+        }
+
+        return null
+      })}
     </Box>
   )
-}
-
-const DesktopMenuItem = ({ item, showIcon = false }) => {
-  const buttonProps = {
-    ...item,
-    endIcon: showIcon && item.icon ? <item.icon /> : undefined,
-  }
-
-  return <Button {...buttonProps}>{item.text}</Button>
 }
 
 export default DesktopMenu

@@ -40,6 +40,24 @@ const theme = createTheme({
         },
       },
     },
+    MuiLink: {
+      variants: [
+        {
+          props: { variant: 'nav' },
+          style: {
+            color: 'inherit',
+            textDecoration: 'none',
+          },
+        },
+        {
+          props: { variant: 'plain' },
+          style: {
+            color: 'inherit',
+            textDecoration: 'none',
+          },
+        },
+      ],
+    },
   },
 })
 

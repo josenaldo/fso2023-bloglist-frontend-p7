@@ -15,6 +15,7 @@ import MobileMenu from './MobileMenu'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth, logout } from '@/features/auth'
 import { useDispatch } from 'react-redux'
+import UserMenu from '@/features/layout/NavBar/UserMenu'
 
 const NavBar = () => {
   const dispatch = useDispatch()
@@ -44,6 +45,7 @@ const NavBar = () => {
           sx={{
             display: 'flex',
             flexDirection: 'row',
+            gap: 2,
           }}
         >
           <IconButton
@@ -62,9 +64,10 @@ const NavBar = () => {
           >
             <Logo />
           </MuiLink>
+          <DesktopMenu user={auth.user} logout={handleLogout} />
         </Box>
 
-        <DesktopMenu user={auth.user} logout={handleLogout} />
+        <UserMenu user={auth.user} logout={handleLogout} />
       </Toolbar>
 
       <MobileMenu
