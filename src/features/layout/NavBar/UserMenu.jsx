@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
 
 import {
   Avatar,
@@ -19,7 +18,6 @@ import PersonIcon from '@mui/icons-material/Person'
 import { Link } from 'react-router-dom'
 
 const UserMenu = ({ user, logout }) => {
-  const dispatch = useDispatch()
   const [anchorEl, setAnchorEl] = useState(null)
 
   const handleOpenMenu = (event) => {
@@ -31,7 +29,7 @@ const UserMenu = ({ user, logout }) => {
   }
 
   const handleLogout = () => {
-    dispatch(logout())
+    logout()
     handleClose()
   }
 

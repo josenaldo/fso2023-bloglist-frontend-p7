@@ -1,17 +1,16 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import { AppBar, IconButton, Toolbar, Box } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 
+import { useAuth, logout } from '@/features/auth'
 import Logo from './Logo'
+import { Link } from '@/features/ui'
 import DesktopMenu from './DesktopMenu'
 import MobileMenu from './MobileMenu'
-import { useNavigate } from 'react-router-dom'
-import { useAuth, logout } from '@/features/auth'
-import { useDispatch } from 'react-redux'
-import UserMenu from '@/features/layout/NavBar/UserMenu'
-
-import { Link } from '@/features/ui'
+import UserMenu from './UserMenu'
 
 const NavBar = () => {
   const dispatch = useDispatch()
@@ -24,7 +23,7 @@ const NavBar = () => {
     setMobileOpen((prevState) => !prevState)
   }
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
     dispatch(logout())
     navigate('/login')
   }
