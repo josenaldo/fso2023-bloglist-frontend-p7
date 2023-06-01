@@ -7,14 +7,11 @@ import { Loading } from '@/features/ui'
 const UsersPage = () => {
   const { data: users, isLoading } = useGetUsersQuery()
 
-  if (isLoading) {
-    return <Loading />
-  }
-
   return (
     <Box>
       <PageTitle title="Users" />
-      <UserList users={users} />
+
+      {isLoading ? <Loading /> : <UserList users={users} />}
     </Box>
   )
 }

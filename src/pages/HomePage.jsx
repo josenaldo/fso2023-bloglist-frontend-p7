@@ -2,9 +2,13 @@ import { BlogList } from '@/features/blog'
 import React from 'react'
 
 import { BlogForm } from '@/features/blog'
-import { PageTitle, Togglable } from '@/features/ui'
+import { PageTitle, Togglable, Loading } from '@/features/ui'
+import { useGetBlogsQuery } from '@/features/blog'
+import { useAuth } from '@/features/auth'
 
 const HomePage = () => {
+  const { user } = useAuth()
+  const { data: blogs, isLoading } = useGetBlogsQuery()
   const blogFormRef = React.useRef()
 
   return (
@@ -15,7 +19,7 @@ const HomePage = () => {
         <BlogForm />
       </Togglable>
 
-      <BlogList />
+      {isLoading ? <Loading /> : <BlogList blogs={blogs} user={user} />}
     </div>
   )
 }

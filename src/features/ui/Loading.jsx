@@ -1,5 +1,4 @@
-import { Box, CircularProgress, Typography } from '@mui/material'
-
+import { Box, LinearProgress, Typography } from '@mui/material'
 const Loading = () => {
   return (
     <Box
@@ -8,10 +7,16 @@ const Loading = () => {
         flexDirection: 'column',
         alignItems: 'center',
         my: '2rem',
+        gap: '1rem',
+        padding: '1rem',
       }}
     >
-      <CircularProgress />
-      <Typography>Loading...</Typography>
+      <Typography variant="h6" color="primary">
+        Loading...
+      </Typography>
+      <Box sx={{ width: '100%' }}>
+        <LinearProgress />
+      </Box>
     </Box>
   )
 }
