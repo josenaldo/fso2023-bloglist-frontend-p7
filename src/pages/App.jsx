@@ -5,8 +5,8 @@ import { Template } from '@/features/layout'
 import AboutPage from '@/pages/AboutPage'
 import HomePage from '@/pages/HomePage'
 import LoginPage from '@/pages/LoginPage'
-import UsersPage from '@/pages/Users'
-import UserPage from '@/pages/User'
+import UsersPage from '@/pages/UsersPage'
+import UserPage from '@/pages/UserPage'
 
 const IndexPage = () => {
   const matchUser = useMatch('/users/:id')

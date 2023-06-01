@@ -1,7 +1,7 @@
 import { PageTitle } from '@/features/ui'
 import { Box } from '@mui/material'
 
-import { useGetUserQuery } from '@/features/user'
+import { User, useGetUserQuery } from '@/features/user'
 import { Loading } from '@/features/ui'
 
 const UserPage = ({ userId }) => {
@@ -13,8 +13,8 @@ const UserPage = ({ userId }) => {
 
   return (
     <Box>
-      <PageTitle title="Users" />
-      {isLoading ? <Loading /> : <Box>{user.name}</Box>}
+      <PageTitle title="Profile" />
+      {isLoading ? <Loading /> : <User user={user} />}
     </Box>
   )
 }

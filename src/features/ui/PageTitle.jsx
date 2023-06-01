@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material'
 
-const PageTitle = ({ title, variant = 'h3' }) => {
+const PageTitle = ({ title, variant = 'h1' }) => {
   return (
     <Typography
       variant={variant}
