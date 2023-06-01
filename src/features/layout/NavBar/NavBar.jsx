@@ -1,21 +1,17 @@
 import React from 'react'
 
-import {
-  AppBar,
-  IconButton,
-  Toolbar,
-  Link as MuiLink,
-  Box,
-} from '@mui/material'
+import { AppBar, IconButton, Toolbar, Box } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 
 import Logo from './Logo'
 import DesktopMenu from './DesktopMenu'
 import MobileMenu from './MobileMenu'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useAuth, logout } from '@/features/auth'
 import { useDispatch } from 'react-redux'
 import UserMenu from '@/features/layout/NavBar/UserMenu'
+
+import { Link } from '@/features/ui'
 
 const NavBar = () => {
   const dispatch = useDispatch()
@@ -57,13 +53,9 @@ const NavBar = () => {
           >
             <MenuIcon />
           </IconButton>
-          <MuiLink
-            component={Link}
-            to="/"
-            sx={{ color: 'inherit', textDecoration: 'none' }}
-          >
+          <Link to="/" sx={{ color: 'inherit', textDecoration: 'none' }}>
             <Logo />
-          </MuiLink>
+          </Link>
           <DesktopMenu user={auth.user} logout={handleLogout} />
         </Box>
 

@@ -1,25 +1,9 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { appConfig } from '@/data'
+import { api } from '@/features/api'
 
-export const blogApi = createApi({
-  reducerPath: 'blogApi',
-  baseQuery: (args, api, extraOptions) => {
-    return fetchBaseQuery({
-      baseUrl: `${appConfig.application.BACKEND}/api`,
-      prepareHeaders: (headers) => {
-        const user = api.getState()?.auth?.user
-        const token = user?.token
-
-        if (token) {
-          headers.set('Authorization', `Bearer ${token}`)
-        }
-        return headers
-      },
-    })(args, api, extraOptions)
-  },
+export const blogApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getBlogs: builder.query({
-      query: () => '/blogs',
+      query: () => '/blogs/',
       providesTags: (result) => {
         const defaultBlogListTag = [{ type: 'Blogs', id: 'LIST' }]
 
@@ -70,6 +54,7 @@ export const blogApi = createApi({
       invalidatesTags: (result, error, id) => [{ type: 'Blogs', id }],
     }),
   }),
+  overrideExisting: false,
 })
 
 export const {

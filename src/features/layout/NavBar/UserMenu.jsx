@@ -1,7 +1,6 @@
-/* eslint-disable no-unused-vars */
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 
-import { AccountCircle } from '@mui/icons-material'
 import {
   Avatar,
   Box,
@@ -10,20 +9,18 @@ import {
   Menu,
   MenuItem,
   Typography,
-  Link as MuiLink,
   Button,
 } from '@mui/material'
-import React from 'react'
 
 import LoginIcon from '@mui/icons-material/Login'
 import LogoutIcon from '@mui/icons-material/Logout'
 import PersonIcon from '@mui/icons-material/Person'
 
-import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 const UserMenu = ({ user, logout }) => {
   const dispatch = useDispatch()
-  const [anchorEl, setAnchorEl] = React.useState(null)
+  const [anchorEl, setAnchorEl] = useState(null)
 
   const handleOpenMenu = (event) => {
     setAnchorEl(event.currentTarget)

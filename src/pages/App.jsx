@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useMatch } from 'react-router-dom'
 
 import { PrivateOutlet } from '@/features/auth'
 import { Template } from '@/features/layout'
@@ -6,8 +6,12 @@ import AboutPage from '@/pages/AboutPage'
 import HomePage from '@/pages/HomePage'
 import LoginPage from '@/pages/LoginPage'
 import UsersPage from '@/pages/Users'
+import UserPage from '@/pages/User'
 
 const IndexPage = () => {
+  const matchUser = useMatch('/users/:id')
+  const userId = matchUser?.params.id
+
   return (
     <Template>
       <Routes>
@@ -17,6 +21,7 @@ const IndexPage = () => {
         <Route path="/users" element={<PrivateOutlet />}>
           <Route index element={<UsersPage />} />
         </Route>
+        <Route path="/users/:id" element={<UserPage userId={userId} />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/about" element={<AboutPage />} />
       </Routes>

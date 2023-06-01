@@ -1,25 +1,9 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { appConfig } from '@/data'
+import { api } from '@/features/api'
 
-export const userApi = createApi({
-  reducerPath: 'userApi',
-  baseQuery: (args, api, extraOptions) => {
-    return fetchBaseQuery({
-      baseUrl: `${appConfig.application.BACKEND}/api`,
-      prepareHeaders: (headers) => {
-        const user = api.getState()?.auth?.user
-        const token = user?.token
-
-        if (token) {
-          headers.set('Authorization', `Bearer ${token}`)
-        }
-        return headers
-      },
-    })(args, api, extraOptions)
-  },
+export const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query({
-      query: () => '/users',
+      query: () => '/users/',
       providesTags: (result) => {
         const defaultUserListTag = [{ type: 'Users', id: 'LIST' }]
 
@@ -35,9 +19,14 @@ export const userApi = createApi({
         return userTags
       },
     }),
+    getUser: builder.query({
+      query: (id) => `/users/${id}`,
+      providesTags: (result, error, id) => [{ type: 'Users', id }],
+    }),
   }),
+  overrideExisting: false,
 })
 
-export const { useGetUsersQuery } = userApi
+export const { useGetUsersQuery, useGetUserQuery } = userApi
 
 export default userApi

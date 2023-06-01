@@ -32,6 +32,7 @@ const LoginForm = () => {
 
       navigate('/')
     } catch (error) {
+      console.log('🔴 ERROR LOGGING', error)
       setUsername('')
       setPassword('')
 
