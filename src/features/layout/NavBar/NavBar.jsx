@@ -7,7 +7,6 @@ import MenuIcon from '@mui/icons-material/Menu'
 
 import { useAuth, logout } from '@/features/auth'
 import Logo from './Logo'
-import { Link } from '@/features/ui'
 import DesktopMenu from './DesktopMenu'
 import MobileMenu from './MobileMenu'
 import UserMenu from './UserMenu'
@@ -48,13 +47,13 @@ const NavBar = () => {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={{ display: { sm: 'none' } }}
           >
             <MenuIcon />
           </IconButton>
-          <Link to="/" sx={{ color: 'inherit', textDecoration: 'none' }}>
-            <Logo />
-          </Link>
+
+          <Logo />
+
           <DesktopMenu user={auth.user} logout={handleLogout} />
         </Box>
 

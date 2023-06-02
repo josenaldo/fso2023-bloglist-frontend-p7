@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from '@/features/ui'
+import { Link } from 'react-router-dom'
 import {
   Avatar,
   Box,
@@ -11,6 +11,7 @@ import {
   Button,
 } from '@mui/material'
 
+import SettingsIcon from '@mui/icons-material/Settings'
 import LoginIcon from '@mui/icons-material/Login'
 import LogoutIcon from '@mui/icons-material/Logout'
 import PersonIcon from '@mui/icons-material/Person'
@@ -69,18 +70,25 @@ const UserMenu = ({ user, logout }) => {
               },
             }}
           >
-            <MenuItem onClick={handleClose} href={`/users/${user.username}`}>
+            <MenuItem
+              onClick={handleClose}
+              component={Link}
+              to={`/users/${user.username}`}
+            >
               <Avatar /> Profile
             </MenuItem>
             <MenuItem onClick={handleClose}>
-              <Avatar /> My account
+              <Avatar>
+                <SettingsIcon />
+              </Avatar>
+              My account
             </MenuItem>
 
             <Divider />
             <MenuItem onClick={handleLogout}>
               <Avatar>
                 <LogoutIcon />
-              </Avatar>{' '}
+              </Avatar>
               Logout
             </MenuItem>
           </Menu>

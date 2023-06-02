@@ -1,3 +1,4 @@
+import { primaryColor } from './palette'
 const components = {
   MuiCard: {
     styleOverrides: {
@@ -34,6 +35,17 @@ const components = {
         style: {
           color: 'inherit',
           textDecoration: 'none',
+        },
+      },
+      {
+        props: { variant: 'cardTitle' },
+        style: {
+          color: primaryColor[200],
+          textDecoration: 'none',
+          border: (theme) => `1px solid ${theme.palette.primary.main}`,
+          '&:hover': {
+            color: primaryColor[400],
+          },
         },
       },
     ],

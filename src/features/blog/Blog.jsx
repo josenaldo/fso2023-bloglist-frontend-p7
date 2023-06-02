@@ -7,14 +7,15 @@ import { useAuth } from '@/features/auth'
 import {
   useLikeBlogMutation,
   useDeleteBlogMutation,
+  BlogHeader,
   BlogImage,
-  BlogCardHeader,
   BlogActions,
+  BlogDetails,
 } from '@/features/blog'
 import { setErrorAlert, setAlert, ALERT_TYPES } from '@/features/alert'
 import { YesNoDialog } from '@/features/ui'
 
-const BlogCard = ({ blog, blogOwner }) => {
+const Blog = ({ blog }) => {
   const dispatch = useDispatch()
   const [likeBlog, { isLoading: isLikeLoading }] = useLikeBlogMutation()
   const [deleteBlog] = useDeleteBlogMutation()
@@ -22,7 +23,7 @@ const BlogCard = ({ blog, blogOwner }) => {
 
   const { user: loggedUser } = useAuth()
 
-  const owner = blogOwner || blog?.user || null
+  const owner = blog.user
   const isBlogOwner = owner?.username === loggedUser?.username
 
   const handleLike = async (blog) => {
@@ -87,7 +88,7 @@ const BlogCard = ({ blog, blogOwner }) => {
       >
         <BlogImage
           blog={blog}
-          image={`https://picsum.photos/seed/${blog.id}/600/150`}
+          image={`https://picsum.photos/seed/${blog.id}/1200/300`}
         />
 
         <CardContent
@@ -95,18 +96,16 @@ const BlogCard = ({ blog, blogOwner }) => {
             flexGrow: 1,
           }}
         >
-          <BlogCardHeader blog={blog} />
+          <BlogHeader blog={blog} />
+          <BlogDetails blog={blog} blogOwner={owner} />
         </CardContent>
-
         <CardActions>
           <BlogActions
             blog={blog}
             isBlogOwner={isBlogOwner}
             isLikeLoading={isLikeLoading}
             onLike={handleLike}
-            onRemove={() => {
-              setOpenConfirmRemove(true)
-            }}
+            onRemove={() => setOpenConfirmRemove(true)}
           />
         </CardActions>
       </Card>
@@ -114,4 +113,4 @@ const BlogCard = ({ blog, blogOwner }) => {
   )
 }
 
-export default BlogCard
+export default Blog

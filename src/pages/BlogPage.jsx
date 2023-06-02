@@ -1,23 +1,22 @@
-import { PageTitle } from '@/features/ui'
+import { NotFound } from '@/features/ui'
 import { Box } from '@mui/material'
 
-import { User, useGetUserProfileQuery } from '@/features/user'
 import { Loading } from '@/features/ui'
 import { useAuth } from '@/features/auth'
+import { Blog, useGetBlogQuery } from '@/features/blog'
 
 const BlogPage = ({ blogId }) => {
   const { user: loggedUser } = useAuth()
 
-  if (!username) {
-    return <Box>Invalid username</Box>
+  if (!blogId) {
+    return <NotFound name="Blog" />
   }
 
-  const { data: user, isLoading } = useGetUserProfileQuery(username)
+  const { data: blog, isLoading } = useGetBlogQuery(blogId)
 
   return (
     <Box>
-      <PageTitle title="Profile" />
-      {isLoading ? <Loading /> : <User user={user} loggedUser={loggedUser} />}
+      {isLoading ? <Loading /> : <Blog blog={blog} loggedUser={loggedUser} />}
     </Box>
   )
 }

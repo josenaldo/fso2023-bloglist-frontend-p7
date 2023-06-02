@@ -7,29 +7,32 @@ import BlogsPage from '@/pages/BlogsPage'
 import LoginPage from '@/pages/LoginPage'
 import UsersPage from '@/pages/UsersPage'
 import UserPage from '@/pages/UserPage'
+import BlogPage from '@/pages/BlogPage'
 
 const IndexPage = () => {
   const matchUser = useMatch('/users/:username')
   const username = matchUser?.params.username
 
+  const matchBlog = useMatch('/blogs/:id')
+  const blogId = matchBlog?.params.id
+
   return (
     <Template>
       <Routes>
-        <Route path="/" element={<PrivateOutlet />}>
-          <Route index element={<BlogsPage />} />
-        </Route>
-        <Route path="/blogs" element={<PrivateOutlet />}>
-          <Route index element={<BlogsPage />} />
-        </Route>
+        <Route path="/" element={<BlogsPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/about" element={<AboutPage />} />
+
+        <Route path="/blogs" element={<BlogsPage />} />
+        <Route path="/blogs/:username" element={<BlogPage blogId={blogId} />} />
+
         <Route path="/users" element={<PrivateOutlet />}>
           <Route index element={<UsersPage />} />
         </Route>
-        <Route
-          path="/users/:username"
-          element={<UserPage username={username} />}
-        />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/about" element={<AboutPage />} />
+
+        <Route path="/users/:username" element={<PrivateOutlet />}>
+          <Route index element={<UserPage username={username} />} />
+        </Route>
       </Routes>
     </Template>
   )

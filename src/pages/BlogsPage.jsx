@@ -4,8 +4,11 @@ import React from 'react'
 import { BlogForm } from '@/features/blog'
 import { PageTitle, Togglable, Loading } from '@/features/ui'
 import { useGetBlogsQuery } from '@/features/blog'
+import { useAuth } from '@/features/auth'
 
 const BlogsPage = () => {
+  const { user } = useAuth()
+
   const { data: blogs, isLoading } = useGetBlogsQuery()
   const blogFormRef = React.useRef()
 
@@ -13,9 +16,11 @@ const BlogsPage = () => {
     <div>
       <PageTitle title="Blog List" />
 
-      <Togglable buttonLabel="New blog" ref={blogFormRef}>
-        <BlogForm />
-      </Togglable>
+      {user && (
+        <Togglable buttonLabel="New blog" ref={blogFormRef}>
+          <BlogForm />
+        </Togglable>
+      )}
 
       {isLoading ? <Loading /> : <BlogList blogs={blogs} />}
     </div>
