@@ -8,9 +8,13 @@ import {
   Typography,
   Table,
   TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
 } from '@mui/material'
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import { Link } from '@/features/ui'
 
 const User = ({ user }) => {
   console.log('🔴 User', user)
@@ -28,18 +32,17 @@ const User = ({ user }) => {
         sx={{
           display: 'flex',
           justifyContent: 'flex-start',
-          paddingLeft: '1rem',
-
+          paddingLeft: '2rem',
           width: '100%',
         }}
       >
         <Avatar
           sx={{
-            width: 'clamp(80px, 30vw, 200px)',
-            height: 'clamp(80px, 30vw, 200px)',
-            marginTop: 'calc(clamp(40px, 15vw, 100px) * -1)',
+            width: 'clamp(60px, 30vw, 150px)',
+            height: 'clamp(60px, 30vw, 150px)',
+            marginTop: 'calc(clamp(30px, 15vw, 75px) * -1)',
             aspectRatio: '1/1',
-            bgcolor: 'primary.main',
+            bgcolor: 'secondary.main',
           }}
         >
           <AccountCircleIcon sx={{ width: '100%', height: '100%' }} />
@@ -56,7 +59,35 @@ const User = ({ user }) => {
           <Typography variant="subtitle1">{user.username}</Typography>
         </Box>
       </Box>
-      <CardContent></CardContent>
+      <CardContent>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Título</TableCell>
+              <TableCell>Author</TableCell>
+              <TableCell>URL</TableCell>
+              <TableCell>Likes</TableCell>
+            </TableRow>
+          </TableHead>
+
+          <TableBody>
+            {user.blogs.map((blog) => (
+              <TableRow key={blog.id}>
+                <TableCell>
+                  <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+                </TableCell>
+                <TableCell>{blog.author}</TableCell>
+                <TableCell>
+                  <Link to={blog.url} target="_blank" rel="noopener noreferer">
+                    {blog.url}
+                  </Link>
+                </TableCell>
+                <TableCell>{blog.likes}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </CardContent>
     </Card>
   )
 }
