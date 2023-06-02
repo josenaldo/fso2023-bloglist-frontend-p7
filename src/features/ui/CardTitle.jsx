@@ -1,8 +1,12 @@
 import { Typography } from '@mui/material'
 import PropTypes from 'prop-types'
 
-const CardTitle = ({ children, variant = 'h4' }) => {
-  return <Typography variant={variant}>{children}</Typography>
+const CardTitle = ({ children, variant = 'h5' }) => {
+  return (
+    <Typography component="div" gutterBottom variant={variant}>
+      {children}
+    </Typography>
+  )
 }
 
 CardTitle.propTypes = {

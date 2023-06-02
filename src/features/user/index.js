@@ -4,5 +4,6 @@ export { default as User } from './User.jsx'
 export {
   useGetUsersQuery,
   useGetUserQuery,
+  useGetUserProfileQuery,
   default as userApi,
 } from './user-service.js'

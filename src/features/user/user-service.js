@@ -23,10 +23,15 @@ export const userApi = api.injectEndpoints({
       query: (id) => `/users/${id}`,
       providesTags: (result, error, id) => [{ type: 'Users', id }],
     }),
+    getUserProfile: builder.query({
+      query: (username) => `/users/profile/${username}`,
+      providesTags: (result, error, username) => [{ type: 'Users', username }],
+    }),
   }),
   overrideExisting: false,
 })
 
-export const { useGetUsersQuery, useGetUserQuery } = userApi
+export const { useGetUsersQuery, useGetUserQuery, useGetUserProfileQuery } =
+  userApi
 
 export default userApi

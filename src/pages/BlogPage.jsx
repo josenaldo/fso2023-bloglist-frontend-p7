@@ -5,7 +5,7 @@ import { User, useGetUserProfileQuery } from '@/features/user'
 import { Loading } from '@/features/ui'
 import { useAuth } from '@/features/auth'
 
-const UserPage = ({ username }) => {
+const BlogPage = ({ blogId }) => {
   const { user: loggedUser } = useAuth()
 
   if (!username) {
@@ -22,4 +22,4 @@ const UserPage = ({ username }) => {
   )
 }
 
-export default UserPage
+export default BlogPage

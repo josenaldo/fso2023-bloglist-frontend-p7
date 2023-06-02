@@ -2,21 +2,21 @@ const components = {
   MuiCard: {
     styleOverrides: {
       root: {
-        borderRadius: 10,
+        // borderRadius: 10,
       },
     },
   },
   MuiCardContent: {
     styleOverrides: {
       root: {
-        padding: '2rem',
+        padding: '1rem',
       },
     },
   },
   MuiCardActions: {
     styleOverrides: {
       root: {
-        padding: '2rem',
+        padding: '1rem',
       },
     },
   },

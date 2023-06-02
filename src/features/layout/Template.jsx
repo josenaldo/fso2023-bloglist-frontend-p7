@@ -17,7 +17,7 @@ const Template = ({ children }) => {
       <Alert />
 
       <Container
-        maxWidth="md"
+        maxWidth="lg"
         sx={{
           flexGrow: 1,
           my: 2,

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-
+import { Link } from '@/features/ui'
 import {
   Avatar,
   Box,
@@ -14,8 +14,6 @@ import {
 import LoginIcon from '@mui/icons-material/Login'
 import LogoutIcon from '@mui/icons-material/Logout'
 import PersonIcon from '@mui/icons-material/Person'
-
-import { Link } from 'react-router-dom'
 
 const UserMenu = ({ user, logout }) => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -71,7 +69,7 @@ const UserMenu = ({ user, logout }) => {
               },
             }}
           >
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={handleClose} href={`/users/${user.username}`}>
               <Avatar /> Profile
             </MenuItem>
             <MenuItem onClick={handleClose}>
