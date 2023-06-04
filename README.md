@@ -186,6 +186,10 @@ This project uses the following technologies:
 - [fly.io](https://fly.io/)
   - A platform for running applications on a global edge network.
 
+## References
+
+- <https://picsum.photos/>
+
 ## Author
 
 👤 **Josenaldo de Oliveira Matos Filho**

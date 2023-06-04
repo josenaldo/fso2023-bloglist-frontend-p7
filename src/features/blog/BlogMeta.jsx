@@ -1,5 +1,6 @@
 import { Box, Typography, Chip } from '@mui/material'
 import FavoriteIcon from '@mui/icons-material/Favorite'
+import CommentIcon from '@mui/icons-material/Comment'
 
 const BlogMeta = ({ blog }) => {
   return (
@@ -13,7 +14,22 @@ const BlogMeta = ({ blog }) => {
         by {blog.author}
       </Typography>
 
-      <Chip icon={<FavoriteIcon />} label={blog.likes} size="small" />
+      <Chip
+        icon={<FavoriteIcon />}
+        label={blog.likes}
+        size="small"
+        sx={{
+          px: 0.5,
+        }}
+      />
+      <Chip
+        icon={<CommentIcon />}
+        label={blog?.comments.length || 0}
+        size="small"
+        sx={{
+          px: 0.5,
+        }}
+      />
     </Box>
   )
 }

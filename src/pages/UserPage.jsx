@@ -16,7 +16,7 @@ const UserPage = ({ username }) => {
 
   return (
     <Box>
-      <PageTitle title="Profile" />
+      <PageTitle>Profile</PageTitle>
       {isLoading ? <Loading /> : <User user={user} loggedUser={loggedUser} />}
     </Box>
   )

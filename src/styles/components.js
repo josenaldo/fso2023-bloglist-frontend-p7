@@ -1,11 +1,15 @@
 import { primaryColor } from './palette'
 const components = {
   MuiCard: {
-    styleOverrides: {
-      root: {
-        // borderRadius: 10,
+    variants: [
+      {
+        props: { variant: 'comment' },
+        style: {
+          padding: '0.5rem',
+          borderRadius: '1rem',
+        },
       },
-    },
+    ],
   },
   MuiCardContent: {
     styleOverrides: {

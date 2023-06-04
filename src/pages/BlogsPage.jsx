@@ -14,7 +14,7 @@ const BlogsPage = () => {
 
   return (
     <div>
-      <PageTitle title="Blog List" />
+      <PageTitle>Blog List</PageTitle>
 
       {user && (
         <Togglable buttonLabel="New blog" ref={blogFormRef}>

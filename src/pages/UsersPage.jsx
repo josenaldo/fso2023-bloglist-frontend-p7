@@ -9,7 +9,7 @@ const UsersPage = () => {
 
   return (
     <Box>
-      <PageTitle title="Users" />
+      <PageTitle>Users</PageTitle>
 
       {isLoading ? <Loading /> : <UserList users={users} />}
     </Box>

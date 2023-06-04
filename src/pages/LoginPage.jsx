@@ -5,7 +5,7 @@ import { Box } from '@mui/material'
 const LoginPage = () => {
   return (
     <Box>
-      <PageTitle title="Login" />
+      <PageTitle>Login</PageTitle>
       <LoginForm />
     </Box>
   )

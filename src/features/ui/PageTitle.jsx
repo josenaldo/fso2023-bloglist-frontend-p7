@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material'
 
-const PageTitle = ({ title, variant = 'h1' }) => {
+const PageTitle = ({ children, variant = 'h1' }) => {
   return (
     <Typography
       variant={variant}
@@ -9,7 +9,7 @@ const PageTitle = ({ title, variant = 'h1' }) => {
         mb: '2rem',
       }}
     >
-      {title}
+      {children}
     </Typography>
   )
 }

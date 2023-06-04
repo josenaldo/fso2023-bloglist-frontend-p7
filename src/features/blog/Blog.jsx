@@ -11,6 +11,7 @@ import {
   BlogImage,
   BlogActions,
   BlogDetails,
+  BlogComments,
 } from '@/features/blog'
 import { setErrorAlert, setAlert, ALERT_TYPES } from '@/features/alert'
 import { YesNoDialog } from '@/features/ui'
@@ -109,6 +110,8 @@ const Blog = ({ blog }) => {
           />
         </CardActions>
       </Card>
+
+      <BlogComments blog={blog} />
     </Box>
   )
 }

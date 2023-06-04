@@ -7,6 +7,7 @@ export { default as BlogCardHeader } from './BlogCardHeader'
 export { default as Blog } from './Blog'
 export { default as BlogHeader } from './BlogHeader'
 export { default as BlogDetails } from './BlogDetails'
+export { default as BlogComments } from './BlogComments'
 
 export { default as BlogMeta } from './BlogMeta'
 export { default as BlogImage } from './BlogImage'
