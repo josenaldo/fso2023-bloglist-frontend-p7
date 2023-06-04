@@ -1,6 +1,8 @@
 import { api } from '@/features/api'
 
-export const blogApi = api.injectEndpoints({
+const apiWithTag = api.enhanceEndpoints({ addTagTypes: ['Blogs'] })
+
+export const blogApi = apiWithTag.injectEndpoints({
   endpoints: (builder) => ({
     getBlogs: builder.query({
       query: () => '/blogs/',
@@ -53,6 +55,18 @@ export const blogApi = api.injectEndpoints({
       }),
       invalidatesTags: (result, error, id) => [{ type: 'Blogs', id }],
     }),
+    commentBlog: builder.mutation({
+      query: ({ id, content }) => ({
+        url: `/blogs/${id}/comments`,
+        method: 'POST',
+        body: {
+          content,
+        },
+      }),
+      invalidatesTags: (result, error, payload) => [
+        { type: 'Blogs', id: payload.id },
+      ],
+    }),
   }),
   overrideExisting: false,
 })
@@ -64,6 +78,7 @@ export const {
   useUpdateBlogMutation,
   useDeleteBlogMutation,
   useLikeBlogMutation,
+  useCommentBlogMutation,
 } = blogApi
 
 export default blogApi

@@ -21,4 +21,5 @@ export {
   useUpdateBlogMutation,
   useDeleteBlogMutation,
   useLikeBlogMutation,
+  useCommentBlogMutation,
 } from './blog-service'

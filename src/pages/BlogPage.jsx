@@ -14,9 +14,17 @@ const BlogPage = ({ blogId }) => {
 
   const { data: blog, isLoading } = useGetBlogQuery(blogId)
 
+  if (isLoading) {
+    return <Loading />
+  }
+
+  if (!blog) {
+    return <NotFound name="Blog" />
+  }
+
   return (
     <Box>
-      {isLoading ? <Loading /> : <Blog blog={blog} loggedUser={loggedUser} />}
+      <Blog blog={blog} loggedUser={loggedUser} />
     </Box>
   )
 }

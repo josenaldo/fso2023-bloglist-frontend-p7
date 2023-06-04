@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { appConfig } from '@/data'
 
 const api = createApi({
-  educerPath: 'api',
+  reducerPath: 'api',
   baseQuery: (args, api, extraOptions) => {
     return fetchBaseQuery({
       baseUrl: `${appConfig.application.BACKEND}/api`,

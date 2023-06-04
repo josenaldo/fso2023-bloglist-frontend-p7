@@ -1,6 +1,8 @@
 import { api } from '@/features/api'
 
-export const userApi = api.injectEndpoints({
+const apiWithTag = api.enhanceEndpoints({ addTagTypes: ['Users'] })
+
+export const userApi = apiWithTag.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query({
       query: () => '/users/',

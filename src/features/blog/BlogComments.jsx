@@ -1,4 +1,4 @@
-import { SessionTitle } from '@/features/ui'
+import { SessionTitle, Togglable } from '@/features/ui'
 import {
   Avatar,
   Box,
@@ -8,14 +8,18 @@ import {
   Typography,
 } from '@mui/material'
 import PersonIcon from '@mui/icons-material/Person'
+import BlogCommentForm from '@/features/blog/BlogCommentForm'
 
 const BlogComments = ({ blog }) => {
-  console.log('🔴 Comments', blog.comments)
   return (
     <Box>
-      <SessionTitle>BlogComments</SessionTitle>
+      <SessionTitle>Comments</SessionTitle>
 
       <Stack gap={5}>
+        <Togglable buttonLabel="Add a comment">
+          <BlogCommentForm blog={blog} />
+        </Togglable>
+
         {blog.comments.map((comment) => (
           <Card key={comment.id} variant="comment">
             <CardContent
