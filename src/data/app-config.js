@@ -3,7 +3,7 @@ import ApiIcon from '@mui/icons-material/Api'
 
 const appConfig = {
   application: {
-    name: 'Bloglist P7',
+    name: 'Bloglist P7 Redux',
     version: '0.0.1',
     description:
       'This project is a feature-rich bloglist application developed as part of the Full Stack Open course, part 7. Developed by Josenaldo de Oliveira Matos Filho, it is licensed under the MIT License. ',
