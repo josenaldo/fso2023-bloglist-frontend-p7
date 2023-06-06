@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material'
 
-const SessionTitle = ({ children, variant = 'h2' }) => {
+const SectionTitle = ({ children, variant = 'h2' }) => {
   return (
     <Typography
       variant={variant}
@@ -14,4 +14,4 @@ const SessionTitle = ({ children, variant = 'h2' }) => {
   )
 }
 
-export default SessionTitle
+export default SectionTitle

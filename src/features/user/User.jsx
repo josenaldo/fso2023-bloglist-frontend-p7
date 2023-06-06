@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import { SessionTitle, CardTitle } from '@/features/ui'
+import { SectionTitle, CardTitle } from '@/features/ui'
 import { BlogList } from '@/features/blog'
 
 const User = ({ user }) => {
@@ -56,7 +56,7 @@ const User = ({ user }) => {
         </Box>
         <CardContent></CardContent>
       </Card>
-      <SessionTitle>Added blogs</SessionTitle>
+      <SectionTitle>Added blogs</SectionTitle>
       <BlogList blogs={user.blogs} blogOwner={user} />
     </Box>
   )
