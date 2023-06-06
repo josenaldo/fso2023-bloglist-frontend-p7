@@ -11,7 +11,6 @@ import {
   Button,
 } from '@mui/material'
 
-import SettingsIcon from '@mui/icons-material/Settings'
 import LoginIcon from '@mui/icons-material/Login'
 import LogoutIcon from '@mui/icons-material/Logout'
 import PersonIcon from '@mui/icons-material/Person'
@@ -76,12 +75,6 @@ const UserMenu = ({ user, logout }) => {
               to={`/users/${user.username}`}
             >
               <Avatar /> Profile
-            </MenuItem>
-            <MenuItem onClick={handleClose}>
-              <Avatar>
-                <SettingsIcon />
-              </Avatar>
-              My account
             </MenuItem>
 
             <Divider />
