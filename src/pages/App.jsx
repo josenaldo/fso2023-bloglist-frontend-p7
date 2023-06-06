@@ -8,6 +8,7 @@ import LoginPage from '@/pages/LoginPage'
 import UsersPage from '@/pages/UsersPage'
 import UserPage from '@/pages/UserPage'
 import BlogPage from '@/pages/BlogPage'
+import HomePage from '@/pages/HomePage'
 
 const IndexPage = () => {
   const matchUser = useMatch('/users/:username')
@@ -19,7 +20,7 @@ const IndexPage = () => {
   return (
     <Template>
       <Routes>
-        <Route path="/" element={<BlogsPage />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/about" element={<AboutPage />} />
 
