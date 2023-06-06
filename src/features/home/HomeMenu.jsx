@@ -1,3 +1,4 @@
+import { Link } from '@/features/ui'
 import {
   Box,
   Card,
@@ -5,7 +6,6 @@ import {
   CardContent,
   Typography,
 } from '@mui/material'
-import { Link } from 'react-router-dom'
 
 const HomeMenu = ({ pages, user }) => {
   return (
