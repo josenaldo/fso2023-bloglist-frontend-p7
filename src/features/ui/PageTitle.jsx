@@ -1,16 +1,27 @@
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 
 const PageTitle = ({ children, variant = 'h1' }) => {
   return (
-    <Typography
-      variant={variant}
+    <Box
       sx={{
-        mt: '2rem',
-        mb: '2rem',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
       }}
     >
-      {children}
-    </Typography>
+      <Typography
+        variant={variant}
+        sx={{
+          mt: '2rem',
+          mb: '2rem',
+          textAlign: 'center',
+        }}
+      >
+        {children}
+      </Typography>
+    </Box>
   )
 }
 

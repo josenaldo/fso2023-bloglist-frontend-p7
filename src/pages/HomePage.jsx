@@ -9,13 +9,7 @@ const HomePage = () => {
   const { user } = useAuth()
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
+    <Box>
       <PageTitle>{`Welcome to ${appConfig.application.name}`}</PageTitle>
       <HomeMenu pages={pages} user={user} />
     </Box>

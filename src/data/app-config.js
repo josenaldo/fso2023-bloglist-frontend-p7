@@ -29,10 +29,23 @@ const appConfig = {
         url: 'https://reactjs.org/',
       },
       {
-        name: 'Tanstack React Query',
+        name: 'Redux',
+        //  prettier-ignore
         description:
-          'React Query is a state management and data fetching library for React applications. It provides features for fetching, caching, synchronizing, and updating server state in your React application.',
-        url: 'https://www.npmjs.com/package/@tanstack/react-query',
+          'Redux is a predictable state container for JavaScript applications. It helps you write applications that behave consistently, run in different environments (client, server, and native), and are easy to test. Redux provides a single source of truth for your state, making it easier to reason about your application\'s behavior and to debug problems.',
+        url: 'https://redux.js.org/',
+      },
+      {
+        name: 'Redux Toolkit',
+        description:
+          'Redux Toolkit is the official, opinionated, batteries-included toolset for efficient Redux development. It is intended to be the standard way to write Redux logic. It includes utilities to simplify several common Redux use cases, including store setup, defining reducers, immutable update logic, and even creating entire slices of state at once.',
+        url: 'https://redux-toolkit.js.org/',
+      },
+      {
+        name: 'Redux Toolkit Query',
+        description:
+          'Redux Toolkit Query (RTK Query) is a powerful data fetching and caching tool. It provides a set of API middleware utilities designed to simplify data fetching and caching in a Redux application. RTK Query is part of Redux Toolkit and provides automatic caching, background updates, and more.',
+        url: 'https://redux-toolkit.js.org/rtk-query/overview',
       },
       {
         name: 'Material UI (MUI)',
