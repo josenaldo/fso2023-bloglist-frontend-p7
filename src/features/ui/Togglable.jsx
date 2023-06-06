@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Box, Button } from '@mui/material'
 
 const Togglable = React.forwardRef(({ buttonLabel, children }, refs) => {
@@ -44,11 +43,5 @@ const Togglable = React.forwardRef(({ buttonLabel, children }, refs) => {
 })
 
 Togglable.displayName = 'Togglable'
-
-Togglable.propTypes = {
-  buttonLabel: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-  refs: PropTypes.object,
-}
 
 export default Togglable

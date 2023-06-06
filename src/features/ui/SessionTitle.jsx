@@ -1,5 +1,4 @@
 import { Typography } from '@mui/material'
-import PropTypes from 'prop-types'
 
 const SessionTitle = ({ children, variant = 'h2' }) => {
   return (
@@ -13,11 +12,6 @@ const SessionTitle = ({ children, variant = 'h2' }) => {
       {children}
     </Typography>
   )
-}
-
-SessionTitle.propTypes = {
-  children: PropTypes.string.isRequired,
-  variant: PropTypes.string,
 }
 
 export default SessionTitle

@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Box } from '@mui/material'
 
 import { BlogCard } from '@/features/blog'
@@ -37,10 +36,6 @@ const BlogList = ({ blogs, blogOwner }) => {
         ))}
     </Box>
   )
-}
-
-BlogList.propTypes = {
-  blogs: PropTypes.array.isRequired,
 }
 
 export default BlogList
